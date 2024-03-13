@@ -70,4 +70,31 @@ function getbyid($tableName , $id){
     }
 }
 
+function getOrdersByDateRange($dateFrom, $dateTo) {
+    $sql = "SELECT * FROM orders WHERE order_date BETWEEN ? AND ?";
+    $stmt = $this->connection->prepare($sql);
+    $stmt->bind_param("ss", $dateFrom, $dateTo);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result;
+}
+
+function getUserOrders($user_id) {
+    $sql = "SELECT * FROM orders WHERE user_id = ?";
+    $stmt = $this->connection->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result;
+}
+
+function getOrderProducts($order_id) {
+    $sql = "SELECT * FROM products WHERE product_id IN (SELECT product_id FROM order_items WHERE order_id = ?)";
+    $stmt = $this->connection->prepare($sql);
+    $stmt->bind_param("i", $order_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result;
+}
+
 }
