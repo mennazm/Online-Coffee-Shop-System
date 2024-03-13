@@ -1,8 +1,9 @@
 <?php
 session_start();
-include 'db_connection.php';
+include('../config/dbcon.php');
 
 $errors = ""; 
+$db = new db(); // Create an instance of the db class
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -11,10 +12,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors = "Email is required!";
     } else {
         $sql = "SELECT * FROM users WHERE email = '$email'";
-        $result = mysqli_query($conn, $sql);
+        $result = $db->getdata('*', 'users', "email='$email'");
 
         if ($result) {
-            $row = mysqli_fetch_assoc($result);
+            $row = $result->fetch_assoc();
             if ($row) {
                 $_SESSION['reset_user_id'] = $row['user_id'];
                 header("Location: confirm_password.php");
@@ -22,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $errors = "No user found with that email.";
             }
         } else {
-            $errors = "Error: " . mysqli_error($conn);
+            $errors = "Error: " . $db->getconnection()->error;
         }
     }
 }

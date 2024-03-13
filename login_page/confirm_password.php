@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connection.php';
+include ('../config/dbcon.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_SESSION['reset_user_id'];
@@ -8,17 +8,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($password)) {
         $errors = "Password is required!";
-    } else{
-
-    $sql = "UPDATE users SET password_hash = '$password' WHERE user_id = '$user_id'";
-    $result = mysqli_query($conn, $sql);
-
-    if ($result) {
-        header("Location: login.php");
     } else {
-        $error = "Error: " . mysqli_error($conn);
+        $db = new db(); // Create an instance of the db class
+        $result = $db->update_data('users', ['password_hash' => $password], "user_id = '$user_id'");
+
+        if ($result) {
+            header("Location: login.php");
+        } else {
+            $error = "Error: " . $db->getconnection()->error;
+        }
     }
-}
 }
 ?>
 <!DOCTYPE html>

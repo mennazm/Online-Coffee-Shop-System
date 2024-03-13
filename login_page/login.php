@@ -1,7 +1,11 @@
 <?php
 session_start();
-include 'db_connection.php'; 
+include ('../config/dbcon.php'); 
 $errors = []; // Define an array to hold validation errors
+
+// Create an instance of the db class
+$db = new db();
+$connection = $db->getconnection();
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -12,15 +16,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate email and password
     if (empty($email) || empty($password)) {
         $errors[] = "Email and password are required!";
-    } 
-     else {
-         // Validate email format
-      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Invalid email format!";
-    }
+    } else {
+        // Validate email format
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "Invalid email format!";
+        }
+
         // Prepare and execute the query to select email and password from users table
         $sql = "SELECT * FROM users WHERE email = ? AND password_hash = ?";
-        $stmt = $conn->prepare($sql);
+        $stmt = $connection->prepare($sql);
         $stmt->bind_param("ss", $email, $password);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -29,41 +33,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            if($row['role'] == 'admin'){
-              $_SESSION['email'] = $row['email'];
-              header('location:admin.php');
-              exit();
-           } elseif($row['role'] == 'user'){
-              $_SESSION['email'] = $row['email'];
-              header('location:user.php');
-              exit();
-           } 
-       
-      }
-       
-        
-      else{
-        $errors[] = "error password or User does not exist";
-        // exit();
+            // Add user information to session variables
+            $_SESSION["user_id"] = $row["user_id"];
+            $_SESSION["username"] = $row["name"];
+            $_SESSION["image"] = $row["image"];
+            $_SESSION["role"] = $row["role"];
+            $_SESSION["email"] = $row["email"];
+            // Redirect based on the user's role
+            if ($_SESSION["role"] == "admin") {
+                header("Location: ../admin/adminhome.php"); 
+            } else {
+                header("Location: ../user/userhome.php"); 
+            }
+            exit();
+        } else {
+            $errors[] = "Error: Incorrect password or user does not exist";
+        }
 
-    }
         $stmt->close();
-
     }
-    
 
-    $conn->close();
+    $connection->close();
 }
-
-// If there are validation errors or if the form is not submitted, redirect to login page
+// If there are validation errors or if the form is not submitted, redirect to the login page
 if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
     header("Location: login.php");
     exit();
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,10 +70,6 @@ if (!empty($errors)) {
   <title>login</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-
-
 
   <style>
    .image {
