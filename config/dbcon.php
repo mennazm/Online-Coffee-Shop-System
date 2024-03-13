@@ -97,4 +97,11 @@ function getOrderProducts($order_id) {
     return $result;
 }
 
+
+
+
+function getLastInsertedId() {
+    return $this->connection->insert_id;
+}
+
 }
