@@ -3,7 +3,7 @@ class db{
     private $host = "localhost";
     private $dbname = "cafeteria_project";
     private $username = "root";
-    private $password = ""; 
+    private $password = "1234"; 
     private $connection = null;
 
 function __construct() {
@@ -21,7 +21,7 @@ function delete($tablename , $condition){
   return  $this->connection->query("DELETE FROM $tablename WHERE  $condition");
 }
 
-function getdata($cols, $tablename, $condition){
+function getdata($cols, $tablename, $condition=1){
     $query = "SELECT $cols FROM $tablename";
     if ($condition !== '') {
         $query .= " WHERE $condition";
@@ -45,15 +45,30 @@ function insert_data($tableName, $columns, $values){
     }, $values)); 
     return $this->connection->query("INSERT INTO $tableName ($columnsStr) VALUES ($valuesStr)"); 
 } 
+
+    // Insert a row into a table
+    function insert_row($table_name, $data) {
+        $keys = implode(", ", array_keys($data));
+        $values = "'" . implode("', '", array_values($data)) . "'";
+        $query = "INSERT INTO $table_name ($keys) VALUES ($values)";
+        return $this->connection->query($query);
+    }
+
  
 
-function update_data($tableName, $columns_values, $condition) { 
-    $setClause = implode(', ', array_map(function ($column, $value) { 
-        return "$column='$value'"; 
-    }, array_keys($columns_values), $columns_values)); 
+    function update_data($tableName, $columns_values, $condition=1) { 
+        $setClause = implode(', ', array_map(function ($column, $value) { 
+            return "$column=" . (is_null($value) ? "NULL" : "'$value'"); 
+        }, array_keys($columns_values), $columns_values)); 
+        
+        return $this->connection->query("UPDATE $tableName SET $setClause WHERE $condition"); 
+    }
     
-    return $this->connection->query("UPDATE $tableName SET $setClause WHERE $condition"); 
-}
+
+
+
+ 
+
 
 function getbyid($tableName , $id){
     // Execute SQL query to fetch the record with the specified ID
@@ -113,5 +128,6 @@ function getOrdersWithDetails() {
     $result = $this->connection->query($query);
     return $result;
 }
+
 
 }
