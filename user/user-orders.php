@@ -87,7 +87,7 @@ if ($connection->connect_error){
 						//var_dump($result->fetch_array(MYSQLI_ASSOC));
             		//    while ($data = $result->fetch_array(MYSQLI_ASSOC)) {
                   
-                    echo "<img class='img-fluid w-30' src='../admin/assests/images/$image' alt='$username' title='$username' width='50' height='50'/>";
+                    echo "<img class='img-fluid w-30' src='../../admin/assests/images/$image' alt='$username' title='$username' width='50' height='50'/>";
 					echo "<p class='mt-3 mx-2'>$username</p>";
             //    }
             } catch (Exception $e) {
@@ -146,9 +146,13 @@ if ($connection->connect_error){
         $dateFrom = $_POST['start'];
         $dateTo = $_POST['end'];
 
-		  // Fetch orders for the logged-in user
-		  $orders = $db->getUserOrders($user_id);
-		  if ($orders->num_rows > 0) {
+        // Fetch orders for the logged-in user within the specified date range
+        $result = $db->getOrdersByDateRangeForUser($user_id, $dateFrom, $dateTo);
+
+		 /*  $orders = $result->fetch_array(MYSQLI_ASSOC);
+		  var_dump($orders); */
+
+		  if ($result->num_rows > 0) {
 			// Display table structure
 			echo "<table class='table'>";
 			echo "<thead class='thead-light'>";
@@ -162,7 +166,7 @@ if ($connection->connect_error){
 			echo "<tbody>";
 
 			// Output orders and items
-			while ($order = $orders->fetch_assoc()) {
+			while ($order =  $result->fetch_array(MYSQLI_ASSOC)) {
 			  echo "<tr class='order'>";
 			  echo "<td>";
 				 echo "<span>{$order['order_date']}</span>";
@@ -189,7 +193,7 @@ if ($connection->connect_error){
 					 //each-item
 					echo "<div class='col-sm-3'>";
 					echo " <div class='each-order'>";
-					echo "<img src='../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
+					echo "<img src='../../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
 					echo "<h5>{$product['name']}</h5>";
 					echo "<p>{$product['price']} LE</p>";
 					echo "<p>Quantity</p>";
@@ -266,7 +270,7 @@ if ($connection->connect_error){
 				 //each-item
 				echo "<div class='col-sm-3'>";
 				echo " <div class='each-order'>";
-				echo "<img src='../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
+				echo "<img src='../../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
 				echo "<h5>{$product['name']}</h5>";
 				echo "<p>{$product['price']} LE</p>";
 				echo "<p>Quantity</p>";
