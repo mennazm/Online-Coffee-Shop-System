@@ -1,25 +1,43 @@
 <?php
-require("../db.php");
+require('../config/dbcon.php');
 
-$errors = []; // Initialize an empty array to store validation errors
+$errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get room_number and Ext from POST data
+    // Initialize errors array
+    $errors = [];
+
+    // Get room_number and Ext
     $room_number = validate_data($_POST['room_number'] ?? '');
     $Ext = validate_data($_POST['Ext'] ?? '');
 
-    // Validate room_number and Ext (assuming they should be unique)
-    if (!preg_match('/^\d{3}$/', $room_number)) {
+    // Validate room_number and Ext (they should be unique)
+    if ($room_number === '') {
+        $errors['room_number'] = "Room number is required";
+    } elseif (!preg_match('/^\d{3}$/', $room_number)) {
         $errors['room_number'] = "Room number must consist of three digits";
+    }elseif ($room_number === '111') {
+        $errors['room_number'] = "room number cannot be 111";
     }
 
-    if (!preg_match('/^\d{3}$/', $Ext)) {
+
+    if ($Ext === '') {
+        $errors['Ext'] = "Extension is required";
+    } elseif (!preg_match('/^\d{3}$/', $Ext)) {
         $errors['Ext'] = "Extension must consist of three digits";
+    } elseif ($Ext === '111') {
+        $errors['Ext'] = "Extension cannot be 111";
+    }
+
+    if ($room_number !== $Ext) {
+        $errors['matching'] = "Room number and Extension must match";
+        $errors['room_number'] = "Room number and Extension must match";
+        $errors['Ext'] = "Room number and Extension must match";
     }
 
     // Create a new instance of the Db class to connect to the database
-    $db = new Db();
-    $connection = $db->get_connection();
+    $db = new db();
+    $connection = $db->getconnection();
 
     // Check if there are any errors in database connection
     if ($connection->connect_error) {
@@ -60,10 +78,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+// Store errors in session
+session_start();
+$_SESSION['errors'] = $errors;
+
+// Redirect back to the form page
+header("Location: addroom.php");
+exit();
+
 function validate_data($data) {
     $data = trim($data);
+    $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
 }
 ?>
-

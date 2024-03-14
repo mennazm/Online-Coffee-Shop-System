@@ -1,3 +1,9 @@
+<?php
+session_start();
+$errors = $_SESSION['errors'] ?? [];
+include('../includes/header.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,16 +36,9 @@
             <button type="submit" class="btn btn-primary">Add Room</button>
         </form>
     </div>
-    <script>
-        function validateForm() {
-            var roomNumber = document.getElementById("room_number").value;
-            var extension = document.getElementById("Ext").value;
-
-            if (roomNumber !== extension) {
-                alert("Room Number and Extension must have the same ID");
-                return false;
-            }
-        }
-    </script>
-</body>
-</html>
+ 
+<?php 
+// Clear the errors
+$_SESSION['errors'] = [];
+include('../includes/footer.php');
+?>

@@ -1,3 +1,5 @@
+<?php include('../includes/header.php')?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,10 +9,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body>
+
   <div class="container mt-5">
- 
     <!-- Room Table -->
     <div>
+
       <h2>Existing Rooms</h2>
       <a href="addroom.php" class="btn btn-primary">Add New Room</a>
       <table class="table">
@@ -23,8 +26,8 @@
         </thead>
         <tbody>
           <?php
-          require("../db.php");
-          $db = new Db();
+require('../config/dbcon.php');
+$db = new db();
           $rooms = $db->getdata("*", "rooms");
           if ($rooms && $rooms->num_rows > 0) {
               while ($row = $rooms->fetch_assoc()) {
@@ -32,7 +35,6 @@
                   echo "<td>" . $row['room_number'] . "</td>";
                   echo "<td>" . $row['Ext'] . "</td>";
                   echo "<td>
-                  <a href='updateroom.php?id={$row['room_id']}' class='btn btn-primary'>Edit</a>
                   <a href='deleteroom.php?id={$row['room_id']}' class='btn btn-danger' onclick='return confirm(\"Are you sure you want to delete this user?\")'>Delete</a>
                 </td>";
                   echo "</tr>";
@@ -43,7 +45,12 @@
           ?>
         </tbody>
       </table>
+
     </div>
+
   </div>
+
 </body>
 </html>
+<?php include('../includes/footer.php')?>
+

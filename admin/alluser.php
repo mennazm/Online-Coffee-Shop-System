@@ -1,3 +1,6 @@
+<?php include('includes/header.php')?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +10,8 @@
 <body>
 <?php
 // Connect with the database file
-require('db.php');
-$db = new Db(); 
+require('../config/dbcon.php');
+$db = new db(); 
 ?>
 
 <div class="container">
@@ -57,6 +60,11 @@ $db = new Db();
 
         </tbody>
     </table>
+    <?php include('includes/footer.php')?>
+
 </div>
 </body>
 </html>
+
+
+
