@@ -66,7 +66,16 @@ function insert_data($tableName, $columns, $values){
     
 
 
-
+    function get_data_custom($query) {
+        $result = $this->connection->query($query);
+        if (!$result) {
+            // Error handling - log the error message
+            error_log("Database error: " . $this->connection->error);
+            return false;
+        }
+        return $result;
+    }
+    
  
 
 
