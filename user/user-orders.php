@@ -25,33 +25,7 @@ $image = $_SESSION["image"];
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
-
-<style>
-		body{
-			background-color: #FBF8F2;
-		}
-		nav,footer{
-			background-color: #93634C;
-			color: #FBF8F2;
-		}
-		.navbar a{
-			
-			color: #FBF8F2;
-		}
-		.navbar a:hover{
-			color: #FBF8F2;
-		}
-		h1,h2,h3,h4,h5,th{
-			color: #4b281e;
-		}
-		.each-order img{
-			width: 20vw;
-			height: 30vh;
-		}
-		input[name='filter']{
-			background-color: #93634C;
-		}
-	</style>
+	<link rel="stylesheet" href="../assests/css/orders.css";
 </head>
 
 <body>
@@ -77,7 +51,7 @@ $image = $_SESSION["image"];
 		    <?php
        		     try {
                   
-                    echo "<img class='img-fluid w-30' src='../../admin/assests/images/$image' alt='$username' title='$username' width='50' height='50'/>";
+                    echo "<img class='img-fluid w-30' src='../assests/images/$image' alt='$username' title='$username' width='50' height='50'/>";
 					echo "<p class='mt-3 mx-2'>$username</p>";
         
             } catch (Exception $e) {
@@ -137,20 +111,21 @@ $image = $_SESSION["image"];
 
                         if ($result->num_rows > 0) {
                             // Output orders and items
+							echo "<table class='table'>";
+                        echo "<thead class='thead-light'>";
+                        echo "<tr>";
+                        echo "<th scope='col'>Order Date</th>";
+                        echo "<th scope='col'>Status</th>";
+                        echo "<th scope='col'>Amount</th>";
+                        echo "<th scope='col'>Action</th>";
+                        echo "</tr>";
+                        echo "</thead>";
+                        echo "<tbody>";
                             while ($order =  $result->fetch_assoc()) {
 								// Initialize total price for each order
                                 $totalPriceOrder = 0;
                                 // Display table structure
-                                echo "<table class='table'>";
-                                echo "<thead class='thead-light'>";
-                                echo "<tr>";
-                                echo "<th scope='col'>Order Date</th>";
-                                echo "<th scope='col'>Status</th>";
-                                echo "<th scope='col'>Amount</th>";
-                                echo "<th scope='col'>Action</th>";
-                                echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
+                               
 
                                 echo "<tr class='order'>";
                                 echo "<td>";
@@ -172,18 +147,18 @@ $image = $_SESSION["image"];
                                 echo "</td>";
                                 echo "</tr>";
 
-                                echo "<tr class='order-details' style='display: none;'>";
-                                echo "<td colspan='4'>";
-                                echo "<div class='row order-items'>";
                                 // Fetch order items for the current order
                                 $orderProducts = $db->getOrderProducts($order['order_id']);
 								$orderitems=$db->getdata("*","order_items","order_id={$order['order_id']}")->fetch_assoc();
 								//var_dump($orderitems);
+                                echo "<tr class='order-details' style='display: none;'>";
+                                echo "<td colspan='4'>";
+                                echo "<div class='row order-items'>";
                                 foreach ($orderProducts as $product) {
                                     //each-item
                                     echo "<div class='col-sm-3'>";
                                     echo " <div class='each-order'>";
-                                    echo "<img src='../../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
+                                    echo "<img src='../assests/images/{$product['image']}' alt='{$product['name']}' />";
                                     echo "<h5>{$product['name']}</h5>";
                                     echo "<p>{$product['price']} LE</p>";
 									$totalPriceOrder += $product['price']; // Add the price of each item to the total for this order
@@ -193,18 +168,19 @@ $image = $_SESSION["image"];
                                 }
                                 echo "</div>";
 								echo "<div class='total-price d-flex justify-content-evenly my-3'>";
-								echo "<h3>Total</h3>";
-								echo "<h3>{$totalPriceOrder} EGP</h3>"; 
+								echo "<h5>Order price</h5>";
+								echo "<h5>{$totalPriceOrder} EGP</h5>"; 
 								echo "</div>";
                                 echo "</td>";
 								
                                 echo "</tr>";
 								
-                                echo "</tbody>";
-                                echo "</table>";
 								$totalPriceAllOrders += $totalPriceOrder;
 								
                             }
+							
+							echo "</tbody>";
+							echo "</table>";
 							echo "<div class='total-price d-flex justify-content-evenly my-3'>";
 								echo "<h3>Total for all orders</h3>";
 								echo "<h3>{$totalPriceAllOrders} EGP</h3>"; 
@@ -219,10 +195,7 @@ $image = $_SESSION["image"];
                         // If start and end dates are not provided, fetch all orders
                         // Output orders and items
                         $orders = $db->getUserOrders($user_id);
-                        while ($order = $orders->fetch_assoc()) {
-							// Initialize total price for each order
-							$totalPriceOrder = 0;
-                            echo "<table class='table'>";
+						echo "<table class='table'>";
                             echo "<thead class='thead-light'>";
                             echo "<tr>";
                             echo "<th scope='col'>Order Date</th>";
@@ -232,6 +205,11 @@ $image = $_SESSION["image"];
                             echo "</tr>";
                             echo "</thead>";
                             echo "<tbody>";
+
+                        while ($order = $orders->fetch_assoc()) {
+							// Initialize total price for each order
+							$totalPriceOrder = 0;
+                            
                             echo "<tr class='order'>";
                             echo "<td>";
                             echo "<span>{$order['order_date']}</span>";
@@ -243,9 +221,10 @@ $image = $_SESSION["image"];
                             echo "<td>";
 						
                             if ($order['order_status'] == "Processing") {
-                                echo "<form method='post'>";
+                                echo "<form method=''>";
                                 echo "<input type='hidden' name='order_id' value='{$order['order_id']}' />";
-                                echo "<input type='submit' class='cancel btn btn-danger' name='cancel_order' value='Cancel'/>";
+	
+                                echo "<button class='cancel btn btn-danger'> Cancel</button>";
                                 echo "</form>";
                             }
                             echo "</td>";
@@ -262,7 +241,7 @@ $image = $_SESSION["image"];
                                 //each-item
                                 echo "<div class='col-sm-3'>";
                                 echo " <div class='each-order'>";
-                                echo "<img src='../../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
+                                echo "<img src='../assests/images/{$product['image']}' alt='{$product['name']}' />";
                                 echo "<h5>{$product['name']}</h5>";
                                 echo "<p>{$product['price']} LE</p>";
 								$totalPriceOrder += $product['price']; // Add the price of each item to the total for this order
@@ -273,16 +252,17 @@ $image = $_SESSION["image"];
                             }
                             echo "</div>";
 							echo "<div class='total-price d-flex justify-content-evenly my-3'>";
-							echo "<h3>Total</h3>";
-							echo "<h3>{$totalPriceOrder} EGP</h3>"; 
+							echo "<h5>Order price</h5>";
+								echo "<h5>{$totalPriceOrder} EGP</h5>";
 							echo "</div>";
 
                             echo "</td>";
                             echo "</tr>";
-                            echo "</tbody>";
-                            echo "</table>";
+                          
 							$totalPriceAllOrders += $totalPriceOrder;
                         }
+						echo "</tbody>";
+						echo "</table>";
 						// Display total price
 						echo "<div class='total-price d-flex justify-content-evenly my-3'>";
 						echo "<h3>Total</h3>";
@@ -297,27 +277,7 @@ $image = $_SESSION["image"];
         </div>
     </section>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var toggleButtons = document.querySelectorAll('.toggle-details');
-    toggleButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var icon = button.querySelector('i');
-            var detailsRow = button.closest('tr').nextElementSibling;
-            if (icon.classList.contains('fa-plus-square')) {
-                icon.classList.remove('fa-plus-square');
-                icon.classList.add('fa-minus-square');
-                detailsRow.style.display = 'table-row';
-            } else {
-                icon.classList.remove('fa-minus-square');
-                icon.classList.add('fa-plus-square');
-                detailsRow.style.display = 'none';
-            }
-        });
-    });
-});
-</script>
+<script src="../assests/js/orders.js"></script>
 <?php include('footer.php');?>
 </body>
 </html>
