@@ -1,12 +1,10 @@
 <?php 
 session_start(); 
-//require("../config/dbcon.php");
+
 // Check if the user is logged in
 require_once('../config/dbcon.php');
 $db = new DB();
 $connection = $db->getconnection();
-
-//$database = new db(); 
 if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "user") {
 
     header("Location: ../login_page/login.php");
@@ -20,9 +18,6 @@ $image = $_SESSION["image"];
 if ($connection->connect_error){
 	die("Failed to connect: " . $connection->connect_error);
 }
-
-
-
 
 ?>
 <!DOCTYPE html>
@@ -80,16 +75,13 @@ if ($connection->connect_error){
 			  </li>
 			</ul>
 			<div class="d-flex align-items-center">
-           <!-- <img "src='./imgs/{$data['image']}'"  width="50" height="50" >-->	
+           
 		    <?php
        		     try {
-              		//  $result = $db->getdata("*","users",1);
-						//var_dump($result->fetch_array(MYSQLI_ASSOC));
-            		//    while ($data = $result->fetch_array(MYSQLI_ASSOC)) {
                   
                     echo "<img class='img-fluid w-30' src='../../admin/assests/images/$image' alt='$username' title='$username' width='50' height='50'/>";
 					echo "<p class='mt-3 mx-2'>$username</p>";
-            //    }
+        
             } catch (Exception $e) {
                 echo "Error: " . $e->getMessage();
             } 

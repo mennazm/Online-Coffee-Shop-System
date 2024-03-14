@@ -105,4 +105,13 @@ function getLastInsertedId() {
     return $this->connection->insert_id;
 }
 
+function getOrdersWithDetails() {
+    $query = "SELECT orders.*, users.name AS username, rooms.room_number, rooms.Ext 
+              FROM orders 
+              INNER JOIN users ON orders.user_id = users.user_id 
+              INNER JOIN rooms ON users.room_id = rooms.room_id";
+    $result = $this->connection->query($query);
+    return $result;
+}
+
 }
