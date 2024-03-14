@@ -20,8 +20,21 @@ $image = $_SESSION["image"];
 if ($connection->connect_error){
 	die("Failed to connect: " . $connection->connect_error);
 }
+
+
+
+
 ?>
- <?php include('header.php');?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
+
 <style>
 		body{
 			background-color: #FBF8F2;
@@ -63,6 +76,7 @@ if ($connection->connect_error){
 			  </li>
 			  <li class="nav-item">
 				<a class="nav-link" href="#">My Orders</a>
+				
 			  </li>
 			</ul>
 			<div class="d-flex align-items-center">
@@ -90,7 +104,9 @@ if ($connection->connect_error){
     <main class="my-orders mt-5">
       <section class="main-padding">
         <div class="container">
+	
           <h1>My Orders</h1>
+
           <!-- date-picker -->
           <form action="" method="post" class="mt-5">
             <div class="row">
@@ -118,26 +134,18 @@ if ($connection->connect_error){
 <!-- user-orders -->
           <div class="user-orders">
 <!-- ! table -->
-            <table class="table">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Order Date</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Amount</th>
-<!--                   <th scope="col">Ext</th>
- -->                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
+          
                 <!-- order -->
                 
 				<?php
        		     try {
+
+		$totalPrice = 0; // Initialize total pric
 					       // Check if start and end dates are provided
     if( !empty($_POST['start']) && !empty($_POST['end'])) {
         $dateFrom = $_POST['start'];
         $dateTo = $_POST['end'];
-         
+
 		  // Fetch orders for the logged-in user
 		  $orders = $db->getUserOrders($user_id);
 		  if ($orders->num_rows > 0) {
@@ -155,8 +163,13 @@ if ($connection->connect_error){
 
 			// Output orders and items
 			while ($order = $orders->fetch_assoc()) {
-			  echo "<tr>";
-			  echo "<td>{$order['order_date']}</td>";
+			  echo "<tr class='order'>";
+			  echo "<td>";
+				 echo "<span>{$order['order_date']}</span>";
+				echo "<button class='toggle-details btn btn-link'><i class='fas fa-plus-square'></i></button>
+				";
+		      	echo  "</td>";
+
 			  echo "<td>{$order['order_status']}</td>";
 			  echo "<td>{$order['total_price']} EGP</td>";
 			  echo "<td>";
@@ -170,13 +183,20 @@ if ($connection->connect_error){
 			   // Fetch order items for the current order
 			   $orderProducts = $db->getOrderProducts($order['order_id']);
 			   foreach ($orderProducts as $product) {
-					echo "<tr>";
+				echo "<tr class='order-details' style='display: none;'>";
 					echo "<td colspan='4'>";
-					echo "<div>";
+					echo "<div  class='row'>";
+					 //each-item
+					echo "<div class='col-sm-3'>";
+					echo " <div class='each-order'>";
 					echo "<img src='../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
 					echo "<h5>{$product['name']}</h5>";
 					echo "<p>{$product['price']} LE</p>";
+					echo "<p>Quantity</p>";
 					echo "</div>";
+					echo "</div>";
+					echo "</div>";
+
 					echo "</td>";
 					echo "</tr>";
 				}
@@ -188,59 +208,94 @@ if ($connection->connect_error){
 			echo "<div class='total-price d-flex justify-content-evenly'>";
 			echo "<h3>Total</h3>";
 			// Calculate total price here
-			echo "<h3>EGP <span>200</span></h3>"; // Example total price
+			echo "<h3>EGP</h3>"; // Example total price
 			echo "</div>";
 		  } else {
 			// No orders found for the user
 			echo "<p>No orders found.</p>";
 		  }
-		} else {
+		} 
+		else {
     // If start and end dates are not provided, fetch all orders
-				 // Fetch orders for the logged-in user
-				 $orders = $db->getUserOrders($user_id);
-				 foreach ($orders as $order) {
-					 echo "<tr>";
-					 echo "<td>{$order['order_date']}</td>";
-					 echo "<td>{$order['order_status']}</td>";
-					 echo "<td>{$order['total_price']} EGP</td>";
-					 echo "<td>";
-					 // Cancel button if order status is 'Processing'
-					 if ($order['order_status'] == "Processing") {
-						 echo "<button class='cancel btn btn-danger'>Cancel</button>";
-					 }
-					 echo "</td>";
-					 echo "</tr>";
- 
-					 // Fetch order items for the current order
-					 $orderProducts = $db->getOrderProducts($order['order_id']);
-                    foreach ($orderProducts as $product) {
-						 echo "<tr>";
-						 echo "<td colspan='4'>";
-						 echo "<div>";
-						 echo "<img src='../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
-						 echo "<h5>{$product['name']}</h5>";
-						 echo "<p>{$product['price']} LE</p>";
-						 echo "</div>";
-						 echo "</td>";
-						 echo "</tr>";
-					 }
-				 }
-				 echo "<div class='total-price d-flex justify-content-evenly'>";
-				 echo "<h3>Total</h3>";
-				 echo "<h3>EGP <span>200</span></h3>";
-				 echo "</div>";
+		// Display table structure
+		echo "<table class='table'>";
+		echo "<thead class='thead-light'>";
+		echo "<tr>";
+		echo "<th scope='col'>Order Date</th>";
+		echo "<th scope='col'>Status</th>";
+		echo "<th scope='col'>Amount</th>";
+		echo "<th scope='col'>Action</th>";
+		echo "</tr>";
+		echo "</thead>";
+		echo "<tbody>";
+
+		// Output orders and items
+		$orders = $db->getUserOrders($user_id);
+		while ($order = $orders->fetch_assoc()) {
+		  echo "<tr class='order'>";
+		  echo "<td>";
+			 echo "<span>{$order['order_date']}</span>";
+			echo "<button class='toggle-details btn btn-link'><i class='fas fa-plus-square'></i></button>
+			";
+			  echo  "</td>";
+
+		  echo "<td>{$order['order_status']}</td>";
+		  echo "<td>{$order['total_price']} EGP</td>";
+	
+		  // Cancel button if order status is 'Processing'
+		  echo "<td>";
+		  if ($order['order_status'] == "Processing") {
+			  echo "<form method='post'>";
+			  echo "<input type='hidden' name='order_id' value='{$order['order_id']}' />";
+			  echo "<input type='submit' class='cancel btn btn-danger' name='cancel_order' value='Cancel'/>";
+			  echo "</form>";
+		  }
+		  echo "</td>";
+		  
+
+		  echo "</tr>";
+           
+            // Add order total price to the total
+            $totalPrice += $order['total_price'];
+		   // Fetch order items for the current order
+		   $orderProducts = $db->getOrderProducts($order['order_id']);
+		   foreach ($orderProducts as $product) {
+			echo "<tr class='order-details' style='display: none;'>";
+				echo "<td colspan='4'>";
+				echo "<div  class='row'>";
+				 //each-item
+				echo "<div class='col-sm-3'>";
+				echo " <div class='each-order'>";
+				echo "<img src='../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
+				echo "<h5>{$product['name']}</h5>";
+				echo "<p>{$product['price']} LE</p>";
+				echo "<p>Quantity</p>";
+				echo "</div>";
+				echo "</div>";
+				echo "</div>";
+
+				echo "</td>";
+				echo "</tr>";
+			}
+		}
+		echo "</tbody>";
+		echo "</table>";
+
+		// Display total price
+		echo "<div class='total-price d-flex justify-content-evenly'>";
+		echo "<h3>Total</h3>";
+		// Calculate total price here
+		echo "<h3>{$totalPrice} EGP</h3>"; // Example total price
+		echo "</div>";
+
+		
 }
               
                } catch (Exception $e) {
                 echo "Error: " . $e->getMessage();
               }
             ?>
-                  
-               
                 
-              </tbody>
-            </table>
-<!-- end of table -->
 						
 <!-- total-price -->
 			<!-- <div class="total-price d-flex justify-content-evenly">
