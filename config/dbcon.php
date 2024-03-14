@@ -69,16 +69,6 @@ function getbyid($tableName , $id){
         return null;
     }
 }
-
-/* function getOrdersByDateRange($dateFrom, $dateTo) {
-    $sql = "SELECT * FROM orders WHERE order_date BETWEEN ? AND ?";
-    $stmt = $this->connection->prepare($sql);
-    $stmt->bind_param("ss", $dateFrom, $dateTo);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    return $result;
-} */
-
 public function getOrdersByDateRangeForUser($user_id, $start_date, $end_date) {
     $query = "SELECT * FROM orders WHERE user_id = ? AND order_date BETWEEN ? AND ?";
     $stmt = $this->connection->prepare($query);
