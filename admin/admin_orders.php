@@ -32,197 +32,92 @@ $image = $_SESSION["image"];
 <main class="admin-orders">
     <section class="main-padding">
         <div class="container">
-          <h1>Orders</h1>
-          <!-- ! table one  -->
-          <table class="table">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Order Date</th>
-                <th scope="col">Name</th>
-                <th scope="col">Room</th>
-                <th scope="col">Ext</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- ! first order -->
-              <tr class="order">
-                <td>
-                  <span>2019/03/10 10.30 AM</span>
-                  <button class="toggle-details btn btn-link"><i class="fas fa-plus-square"></i></button>
+            <h1 class="my-5">Orders</h1>
+            <!-- Table to display orders -->
+            <?php
+            
+            $deliveredOrdersFound = false; // Flag variable to track if any delivered orders are found
+            $result = $db->getOrdersWithDetails();
+            
+            if ($result->num_rows > 0) {  
+                 echo "
+                        <table class='table'>
+                            <thead class='thead-light'>
+                                <tr>
+                                    <th scope='col'>Order Date</th>
+                                    <th scope='col'>Name</th>
+                                    <th scope='col'>Room</th>
+                                    <th scope='col'>Ext</th>
+                                    <th scope='col'>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        ";
+                       /*  echo "<pre>";
+                        var_dump($result->fetch_assoc());
+                echo "</pre>"; */
+       
+                   while ($row = $result->fetch_assoc()) {
+                    
+                    if ($row['order_status'] == "Done") {
+                       
+                        echo "<tr class='order'>";
+                        echo "<td><span>{$row['order_date']}</span><button class='toggle-details btn btn-link'><i class='fas fa-plus-square'></i></button></td>";
+                        echo "<td>{$row['username']}</td>";
 
-                </td>
-                <td>Fatma Alzahraa</td>
-                <td>102</td>
-                <td>1020</td>
-                <td>deliver</td>
-              </tr>
-             <tr class="order-details" style="display: none;">
-                <td colspan="5">
-                  <div class="row">
-                    <!-- each-item -->
-                    <div class="col-sm-2">
-                      <div class="each-order">
-                        <img
-                        src="../admin/assests/images/cake.jpg"
-                          class="w-100"
-                          width="100"
-                          height="100"
-                          alt=""
-                        />
-                        <h5>tea</h5>
-                        <input type="text" name="tea" value="15" hidden />
-                        <span>15 LE</span>
-                        <span>2</span>
-                      </div>
-                    </div>
-                    <!-- each-item -->
-                    <div class="col-sm-2">
-                      <div class="each-order">
-                        <img
-                        src="../admin/assests/images/cake.jpg"
-                          class="w-100"
-                          width="100"
-                          height="100"
-                          alt=""
-                        />
-                        <h5>tea</h5>
-                        <input type="text" name="tea" value="15" hidden />
-                        <span>15 LE</span>
-                        <span>3</span>
-                      </div>
-                    </div>
-                    <!-- each-item -->
-                    <div class="col-sm-2">
-                      <div class="each-order">
-                        <img
-                        src="../admin/assests/images/cake.jpg"
-                          class="w-100"
-                          width="100"
-                          height="100"
-                          alt=""
-                        />
-                        <h5>tea</h5>
-                        <input type="text" name="tea" value="15" hidden />
-                        <span>15 LE</span>
-                        <span>5</span>
-                      </div>
-                    </div>
-                    <!-- each-item -->
-                    <div class="col-sm-2">
-                      <div class="each-order">
-                        <img
-                          src="../admin/assests/images/cake.jpg"
-                          class="w-100"
-                          width="100"
-                          height="100"
-                          alt=""
-                        />
-                        <h5>tea</h5>
-                        <input type="text" name="tea" value="15" hidden />
-                        <span>15 LE</span>
-                        <span>1</span>
-                      </div>
-                    </div>
-                    <!-- Display total price -->
-                     <div class='total-price d-flex justify-content-evenly'>
-                     <h3>Total</h3>
-                    <!-- Calculate total price here -->
-                     <h3>EGP</h3>
-                     </div>
-                  </div>
-                </td>
-              </tr>
-              <!-- ! ./first order -->
-
-              <!-- ! second order -->
-              <tr class="order">
-                <td>
-                  <span>2019/03/10 10.30 AM</span>
-                  <button class="toggle-details btn btn-link"><i class="fas fa-plus-square"></i></button>
-                </td>
-                <td>Maghfera Hassan</td>
-                <td>102</td>
-                <td>3040</td>
-                <td>deliver</td>
-              </tr>
-              <tr class="order-details" style="display: none;">
-                <td colspan="5">
-                  <div class="row">
-                    <!-- each-item -->
-                    <div class="col-sm-2">
-                      <div class="each-order">
-                        <img
-                        src="../admin/assests/images/cake.jpg"
-                          class="w-100"
-                          width="100"
-                          height="100"
-                          alt=""
-                        />
-                        <h5>tea</h5>
-                        <input type="text" name="tea" value="15" hidden />
-                        <span>15 LE</span>
-                        <span>2</span>
-                      </div>
-                    </div>
-                    <!-- each-item -->
-                    <div class="col-sm-2">
-                      <div class="each-order">
-                        <img
-                        src="../admin/assests/images/delicious-donuts.jpg"
-                          class="w-100"
-                          width="100"
-                          height="100"
-                          alt=""
-                        />
-                        <h5>tea</h5>
-                        <input type="text" name="tea" value="15" hidden />
-                        <span>15 LE</span>
-                        <span>3</span>
-                      </div>
-                    </div>
-                    <!-- each-item -->
-                    <div class="col-sm-2">
-                      <div class="each-order">
-                        <img
-                        src="../admin/assests/images/cake.jpg"
-                          class="w-100"
-                          width="100"
-                          height="100"
-                          alt=""
-                        />
-                        <h5>tea</h5>
-                        <input type="text" name="tea" value="15" hidden />
-                        <span>15 LE</span>
-                        <span>5</span>
-                      </div>
-                    </div>
-                    <!-- each-item -->
-                    <div class="col-sm-2">
-                      <div class="each-order">
-                        <img
-                        src="../admin/assests/images/cake.jpg"
-                          class="w-100"
-                          width="100"
-                          height="100"
-                          alt=""
-                        />
-                        <h5>tea</h5>
-                        <input type="text" name="tea" value="15" hidden />
-                        <span>15 LE</span>
-                        <span>1</span>
-                      </div>
-                    </div>
-                    <!-- order-total-price -->
-                    <div class="col-sm-4 order-total-price">
-                      <p>Total: EGP <span>34</span></p>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <!-- ! ./second order -->
-            </tbody>
-          </table>
+                        $rooms=$db->getdata("*","rooms","room_id={$row['room_id']}");
+                       /*  echo "<pre>";
+                       var_dump($rooms->fetch_assoc());
+                       echo "</pre>"; */
+                        $room=$rooms->fetch_assoc(); 
+                         echo "<td>{$room['room_number']}</td>";
+                        echo "<td>{$row['Ext']}</td>";
+                        echo "<td>deliver</td>";
+                        echo "</tr>";
+                        echo "<tr class='order-details' style='display: none;'>";
+                        echo "<td colspan='5'>";
+                        echo "<div class='row order-items'>";
+                        // Fetch order details for the current order
+                        $orderProducts = $db->getOrderProducts($row['order_id']);
+                        $totalPrice = 0; // Initialize total price
+                        if ($orderProducts->num_rows > 0) {
+                            while ($order_detail = $orderProducts->fetch_assoc()) {
+                                // Fetch order item for the current product
+                                $orderItem = $db->getdata("*", "order_items", "order_id={$row['order_id']} AND product_id={$order_detail['product_id']}")->fetch_assoc();
+                                
+                                echo "<div class='col-sm-3'>";
+                                echo "<div class='each-order'>";
+                                echo "<img src='./assests/images/{$order_detail['image']}' alt='{$order_detail['name']}' />";
+                                echo "<h4>{$order_detail['name']}</h4>";
+                                echo "<h6> Price: <span>{$order_detail['price']} LE</span></h6>";
+                                echo "<h6> Quantity: <span>{$orderItem['quantity']}</span></h6>";
+                                $totalPrice += $order_detail['price'] * $orderItem['quantity']; // Add the price of each item to the total
+                                echo "</div>";
+                                echo "</div>";
+                            }
+                        } 
+                             // Display total price
+		                  echo "<div class='total-price d-flex justify-content-evenly my-3'>";
+	                  	echo "<h3>Total</h3>";
+	
+		                echo "<h3>{$totalPrice} EGP</h3>"; 
+	                  	echo "</div>";
+                        echo "</div>";
+                        echo "</td>";
+                        echo "</tr>";
+                        
+                        $deliveredOrdersFound = true; // Set the flag to true if delivered orders are found
+                    }
+                }
+                   echo "</tbody>";
+                        echo "</table>";
+            } 
+            if (!$deliveredOrdersFound) { // Display message if no delivered orders are found
+                echo "<h3 class='text-center'>No delivered orders yet....</h3>";
+            }
+            ?>
+                </tbody>
+            </table>
         </div>
     </section>
 </main>

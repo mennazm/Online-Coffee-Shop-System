@@ -102,34 +102,44 @@ $image = $_SESSION["image"];
                                 echo "</tr>";
 
                                 // Fetch order items for the current order
-                                $orderProducts = $db->getOrderProducts($order['order_id']);
-								$orderitems=$db->getdata("*","order_items","order_id={$order['order_id']}")->fetch_assoc();
+                              //  $orderProducts = $db->getOrderProducts($order['order_id']);
+								//$orderitems=$db->getdata("*","order_items","order_id={$order['order_id']}")->fetch_assoc();
 								//var_dump($orderitems);
                                 echo "<tr class='order-details' style='display: none;'>";
                                 echo "<td colspan='4'>";
                                 echo "<div class='row order-items'>";
-                                foreach ($orderProducts as $product) {
-                                    //each-item
+
+            ///////////////////////////////////////////////
+                                  // Fetch order items for the current order
+                            $orderProducts = $db->getOrderProducts($order['order_id']);
+							//$orderitems=$db->getdata("*","order_items","order_id={$order['order_id']}")->fetch_assoc();
+                            
+                            //var_dump($orderitems);
+                            foreach ($orderProducts as $product) {
+                                // Fetch order items for the current product
+                                $orderItem = $db->getdata("*", "order_items", "order_id={$order['order_id']} AND product_id={$product['product_id']}")->fetch_assoc();
+                            
+                                // Check if order item exists
+                                if ($orderItem) {
                                     echo "<div class='col-sm-3'>";
                                     echo " <div class='each-order'>";
                                     echo "<img src='../assests/images/{$product['image']}' alt='{$product['name']}' />";
                                     echo "<h5>{$product['name']}</h5>";
-                                    echo "<p>{$product['price']} LE</p>";
-									$totalPriceOrder += $product['price']; // Add the price of each item to the total for this order
-                                    echo "<p>Quantity: {$orderitems['quantity']}</p>";
+                            
+                                    $totalPriceProduct = $product['price'] * $orderItem['quantity']; // Calculate total price for this product
+                                    echo "<h6> Price: <span>{$product['price']} LE</span></h6>";
+                                    echo "<h6> Quantity: <span>{$orderItem['quantity']}</span></h6>";
                                     echo "</div>";
                                     echo "</div>";
                                 }
+                            }
                                 echo "</div>";
-								echo "<div class='total-price d-flex justify-content-evenly my-3'>";
-								echo "<h5>Order price</h5>";
-								echo "<h5>{$totalPriceOrder} EGP</h5>"; 
-								echo "</div>";
+								
                                 echo "</td>";
 								
                                 echo "</tr>";
 								
-								$totalPriceAllOrders += $totalPriceOrder;
+                                $totalPriceAllOrders += $order['total_price'];
 								
                             }
 							
@@ -145,10 +155,13 @@ $image = $_SESSION["image"];
                             echo "<p>No orders found.</p>";
 							
                         }
-                    } else {
+                    } 
+                    
+          else {
                         // If start and end dates are not provided, fetch all orders
                         // Output orders and items
                         $orders = $db->getUserOrders($user_id);
+                        
 						echo "<table class='table'>";
                             echo "<thead class='thead-light'>";
                             echo "<tr>";
@@ -159,8 +172,9 @@ $image = $_SESSION["image"];
                             echo "</tr>";
                             echo "</thead>";
                             echo "<tbody>";
-
+              
                         while ($order = $orders->fetch_assoc()) {
+                            
 							// Initialize total price for each order
 							$totalPriceOrder = 0;
                             
@@ -188,34 +202,34 @@ $image = $_SESSION["image"];
                             echo "<div class='row order-items'>";
                             // Fetch order items for the current order
                             $orderProducts = $db->getOrderProducts($order['order_id']);
-							$orderitems=$db->getdata("*","order_items","order_id={$order['order_id']}")->fetch_assoc();
-
+							//$orderitems=$db->getdata("*","order_items","order_id={$order['order_id']}")->fetch_assoc();
+                            
+                            //var_dump($orderitems);
                             foreach ($orderProducts as $product) {
-                                //each-item
-                                echo "<div class='col-sm-3'>";
-                                echo " <div class='each-order'>";
-                                echo "<img src='../assests/images/{$product['image']}' alt='{$product['name']}' />";
-                                echo "<h5>{$product['name']}</h5>";
+                                // Fetch order items for the current product
+                                $orderItem = $db->getdata("*", "order_items", "order_id={$order['order_id']} AND product_id={$product['product_id']}")->fetch_assoc();
                             
-                                
-								//$totalPriceOrder += $product['price']; // Add the price of each item to the total for this order
-                                $totalPriceOrder += $product['price'] * $orderitems['quantity'];
+                                // Check if order item exists
+                                if ($orderItem) {
+                                    echo "<div class='col-sm-3'>";
+                                    echo " <div class='each-order'>";
+                                    echo "<img src='../assests/images/{$product['image']}' alt='{$product['name']}' />";
+                                    echo "<h5>{$product['name']}</h5>";
                             
-                                echo "<h6> Price: <span>{$product['price']} LE</span></h6>";
-                                echo "<h6> Quantity: <span>{$orderitems['quantity']}</span></h6>";
-                                echo "</div>";
-                                echo "</div>";
+                                  //  $totalPriceProduct = $product['price'] * $orderItem['quantity']; // Calculate total price for this product
+                                    echo "<h6> Price: <span>{$product['price']} LE</span></h6>";
+                                    echo "<h6> Quantity: <span>{$orderItem['quantity']}</span></h6>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                }
                             }
                             echo "</div>";
-							echo "<div class='total-price d-flex justify-content-evenly my-3'>";
-							echo "<h5>Order price</h5>";
-								echo "<h5>{$totalPriceOrder} EGP</h5>";
-							echo "</div>";
+							
 
                             echo "</td>";
                             echo "</tr>";
                           
-							$totalPriceAllOrders += $totalPriceOrder;
+                            $totalPriceAllOrders += $order['total_price'];
                         }
 						echo "</tbody>";
 						echo "</table>";
