@@ -14,6 +14,8 @@ $user_id = $_SESSION["user_id"];
 $username = $_SESSION["username"];
 $image = $_SESSION["image"]; 
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -96,13 +98,12 @@ $image = $_SESSION["image"];
             <h1>Orders</h1>
             <!-- Table to display orders -->
             <?php
+            
             $deliveredOrdersFound = false; // Flag variable to track if any delivered orders are found
             $result = $db->getOrdersWithDetails();
+            
             if ($result->num_rows > 0) {  
-               //  var_dump($result->fetch_assoc());
-                while ($row = $result->fetch_assoc()) {
-                    if ($row['order_status'] == "Done") {
-                        echo "
+                 echo "
                         <table class='table'>
                             <thead class='thead-light'>
                                 <tr>
@@ -115,11 +116,36 @@ $image = $_SESSION["image"];
                             </thead>
                             <tbody>
                         ";
+                       /*  echo "<pre>";
+                        var_dump($result->fetch_assoc());
+                echo "</pre>"; */
+                
+          
+       
+                   while ($row = $result->fetch_assoc()) {
+                    
+                    if ($row['order_status'] == "Done") {
+                       
                         echo "<tr class='order'>";
                         echo "<td><span>{$row['order_date']}</span><button class='toggle-details btn btn-link'><i class='fas fa-plus-square'></i></button></td>";
                         echo "<td>{$row['username']}</td>";
-                        echo "<td>{$row['room_number']}</td>";
+
+                        $rooms=$db->getdata("*","rooms","room_id={$row['room_id']}");
+                       /*  echo "<pre>";
+                       var_dump($rooms->fetch_assoc());
+                       echo "</pre>"; */
+                        $room=$rooms->fetch_assoc(); 
+
+                      
+                             
+                                echo "<td>{$room['room_number']}</td>";
+                             
+                       
                         echo "<td>{$row['Ext']}</td>";
+
+                        
+
+
                         echo "<td>deliver</td>";
                         echo "</tr>";
                         echo "<tr class='order-details' style='display: none;'>";
@@ -127,18 +153,20 @@ $image = $_SESSION["image"];
                         echo "<div class='row order-items'>";
                         // Fetch order details for the current order
                         $orderProducts = $db->getOrderProducts($row['order_id']);
+                       // var_dump($orderProducts->fetch_assoc());
+                      
                         $orderitems=$db->getdata("*","order_items","order_id={$row['order_id']}")->fetch_assoc();
-                        //var_dump($orderitems);
+                       // var_dump($orderitems);
                         $totalPrice = 0; // Initialize total price
                         if ($orderProducts->num_rows > 0) {
-                           // var_dump($orderProducts->fetch_assoc());
+                           //var_dump($orderProducts->fetch_assoc());
                             while ($order_detail = $orderProducts->fetch_assoc()) {
                                 echo "<div class='col-sm-3'>";
                                 echo "<div class='each-order'>";
                                 echo "<img src='./assests/images/{$order_detail['image']}' alt='{$order_detail['name']}' />";
                                 echo "<h4>{$order_detail['name']}</h4>";
                                 echo "<h6> Price: <span>{$order_detail['price']} LE</span></h6>";
-                                $totalPrice += $order_detail['price']; // Add the price of each item to the total
+                                $totalPrice += $order_detail['price'] * $orderitems['quantity']; // Add the price of each item to the total
                                 echo "<h6> Quantity: <span>{$orderitems['quantity']}</span></h6>";
                             
                                 echo "</div>";
@@ -149,16 +177,17 @@ $image = $_SESSION["image"];
 		                  echo "<div class='total-price d-flex justify-content-evenly my-3'>";
 	                  	echo "<h3>Total</h3>";
 	
-		                  echo "<h3>{$totalPrice} EGP</h3>"; 
+		                echo "<h3>{$totalPrice} EGP</h3>"; 
 	                  	echo "</div>";
                         echo "</div>";
                         echo "</td>";
                         echo "</tr>";
-                        echo "</tbody>";
-                        echo "</table>";
+                        
                         $deliveredOrdersFound = true; // Set the flag to true if delivered orders are found
                     }
                 }
+                echo "</tbody>";
+                        echo "</table>";
             } 
             if (!$deliveredOrdersFound) { // Display message if no delivered orders are found
                 echo "<h3 class='text-center'>No delivered orders yet....</h3>";

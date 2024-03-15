@@ -34,10 +34,10 @@ $image = $_SESSION["image"];
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link active" href="userhome.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">My Orders</a>
+                        <a class="nav-link" href="user-orders.php">My Orders</a>
                     </li>
                 </ul>
                 <div class="user-info">

@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     $amount = $_POST['amount'];
 
     //Insert into the 'orders' table 
-    $insertOrderQuery = "INSERT INTO `orders` (user_id, room_id, total_price, order_status, order_date) VALUES (?, ?, ?, 'Processing', NOW())";
+    $insertOrderQuery = "INSERT INTO `orders` (user_id, room_id, total_price, order_status, order_date) VALUES (?, ?, ?, 'Done', NOW())";
     $stmtOrder = $database->getConnection()->prepare($insertOrderQuery);
     if ($stmtOrder) {
         $stmtOrder->bind_param("iid", $selected_user_id, $room_id, $amount);
@@ -31,9 +31,9 @@ if (isset($_POST['submit'])) {
               $stmtOrderItem->execute();
             }
         }
-        var_dump($_POST);
+      // var_dump($_POST);
         // Redirect to a confirmation page or perform other actions as needed
-        //header("Location: success.html");
+    header("Location: ../../admin/admin_orders.php");
         exit();
     }
 }

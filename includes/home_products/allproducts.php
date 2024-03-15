@@ -9,9 +9,10 @@ $db = new db();
         $result = $db->getdata("*", "products", "");
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
+                
                 ?>
                 <div class="col-md-3">
-                    <div class="card each-order position-relative" data-product-id="<?php echo $row['id']; ?>">
+                    <div class="card each-order position-relative" data-product-id="<?php echo $row['product_id']; ?>">
                         <img src='../assests/images/<?php echo $row['image']; ?>' class="card-img-top" alt="Product Image" style="height: 130px; width:100%">
                         <div class="card-body">
                             <div class="price-circle">
@@ -19,7 +20,7 @@ $db = new db();
                             </div>
                             <h5 class="card-title"><?php echo $row['name']; ?></h5>
                             <input type="text" name="<?php echo $row['name']; ?>" value="<?php echo $row['price']; ?>" hidden />
-                            <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
+                            <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
                         </div>
                     </div>
                 </div>

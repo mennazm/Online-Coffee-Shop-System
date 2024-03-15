@@ -1,7 +1,7 @@
 <?php
 // Include your database connection file
 require_once('../config/dbcon.php');
-$db = new DB();
+$db = new db();
 $connection = $db->getconnection();
 
 // Check if the cancel order button is clicked
