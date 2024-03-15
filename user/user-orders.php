@@ -137,15 +137,11 @@ $image = $_SESSION["image"];
                                 echo "<td>";
                                 // Cancel button if order status is 'Processing'
                                 if ($order['order_status'] == "Processing") {
-                                    //echo "<button class='cancel btn btn-danger'>Cancel</button>";
-									
-									//echo "<input type='hidden' name='order_id' value='{$order['order_id']}' />";
                                     echo "<form method='post' action='cancel_order.php' onsubmit='return confirmDelete()'>";
                                     echo "<input type='hidden' name='order_id' value='{$order['order_id']}' />";
                                     echo "<button type='submit' class='cancel btn btn-danger' name='cancel_order'>Cancel</button>";
-									echo "</form>";
-                       
-                                }
+                                    echo "</form>";
+                                 }
 
                                 echo "</td>";
                                 echo "</tr>";
@@ -224,12 +220,11 @@ $image = $_SESSION["image"];
                             echo "<td>";
 						
                             if ($order['order_status'] == "Processing") {
-                                echo "<form method=''>";
+                                echo "<form method='post' action='cancel_order.php' onsubmit='return confirmDelete()'>";
                                 echo "<input type='hidden' name='order_id' value='{$order['order_id']}' />";
-	
-                                echo "<button class='cancel btn btn-danger'> Cancel</button>";
+                                echo "<button type='submit' class='cancel btn btn-danger' name='cancel_order'>Cancel</button>";
                                 echo "</form>";
-                            }
+                             }
                             echo "</td>";
                             echo "</tr>";
 

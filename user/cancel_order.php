@@ -1,10 +1,11 @@
 <?php
 // Include your database connection file
 require_once('../config/dbcon.php');
-$db = new db();
+$db = new DB();
 $connection = $db->getconnection();
 
 // Check if the cancel order button is clicked
+
 if(isset($_POST['cancel_order'])) {
     $order_id = $_POST['order_id'];
 
