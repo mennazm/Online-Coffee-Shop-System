@@ -2,7 +2,7 @@
 class DB {
     private $host = "localhost";
     private $user = "root";
-    private $pass = "1234";
+    private $pass = "";
     private $dbname = "cafeteria_project";
     private $connection = "";
 

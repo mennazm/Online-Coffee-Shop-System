@@ -1,6 +1,8 @@
 <?php 
-session_start();
+ob_start();
+
 include('includes/header.php');
+
 // Clear session errors
 unset($_SESSION['errors']);
 ?>
@@ -9,6 +11,14 @@ unset($_SESSION['errors']);
 require('../config/dbcon.php');
 // Create database object
 $database = new db();
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
+
+    header("Location: ../login_page/login.php");
+    exit();
+}
+$user_id = $_SESSION["user_id"];
+$username = $_SESSION["username"];
+$image = $_SESSION["image"];
 
 // Check if the form is submitted
 if(isset($_POST['submit'])) {
@@ -176,5 +186,5 @@ else {
 }
 
 ?>
-
+<?php ob_end_flush()?>
 <?php include('includes/footer.php')?>

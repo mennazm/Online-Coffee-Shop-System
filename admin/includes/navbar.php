@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
                 <li class="nav-item mr-2">
-                    <a class="nav-link active" aria-current="page" href="./index.php">Home</a>
+                    <a class="nav-link active" aria-current="page" href="./adminhome.php">Home</a>
                 </li>
                 <li class="nav-item mr-2">
                     <a class="nav-link" href="./products.php">Products</a>
@@ -16,7 +16,7 @@
                     <a class="nav-link" href="./alluser.php">Users</a>
                 </li>
                 <li class="nav-item mr-2">
-                    <a class="nav-link" href="./alluser.php">Manual orders</a>
+                    <a class="nav-link" href="./admin_orders.php">Manual orders</a>
                 </li>
 
                 <li class="nav-item">

@@ -1,14 +1,25 @@
 <?php
-// Start the session
-session_start();
+ob_start();
 
-include('includes/header.php')?>
-<?php
-require('../config/dbcon.php');
-$db = new db(); 
-
+include('includes/header.php');
 
 ?>
+<?php
+require('../config/dbcon.php');
+
+$db = new db(); 
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
+
+    header("Location: ../login_page/login.php");
+    exit();
+}
+$user_id = $_SESSION["user_id"];
+$username = $_SESSION["username"];
+$image = $_SESSION["image"];
+
+?>
+
+
 <div style="background-color:#FBF8F2" class="container bg-body mt-3">
 
     <div class="row">
@@ -31,7 +42,7 @@ $db = new db();
             </thead>
             <tbody>
                 <?php
-                $result = $db->getdata("*", "products", ""); // Fetch data from students table
+                $result = $db->getdata("*", "products", ""); 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
@@ -41,7 +52,8 @@ $db = new db();
                         echo "<td><img src='assests/images/{$row['image']}'  width='50' height='50'></td>";
                         echo "<td>
                                 <a href='edit-product.php?id={$row['id']}' class='btn btn-primary'>Edit</a>
-                                <a href='delete_product.php?id={$row['id']}' class='btn btn-danger' onclick='return confirm(\"Are you sure you want to delete this user?\")'>Delete</a>
+            
+                                <button type='button' class='btn btn-danger delete_product_btn' value='{$row['id']}'>Delete</button>
                             </td>";
                         echo "</tr>";
                     }
@@ -49,18 +61,7 @@ $db = new db();
                     echo "<tr><td colspan='7'>No records found</td></tr>";
                 }
                 ?>
-                <?php
-                // Get the session message, if any
-                $message = isset($_SESSION['message']) ? $_SESSION['message'] : "";
-
-                // Display the message
-                echo $message;
-
-                // Unset the session message after retrieving it
-                unset($_SESSION['message']);
-
-                 
-?>
+                
             </tbody>
             </table>
         </div>
@@ -68,5 +69,5 @@ $db = new db();
 </div>
 </div>
 
-
+<?php ob_end_flush()?>
 <?php include('includes/footer.php')?>

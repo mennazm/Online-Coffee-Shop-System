@@ -1,20 +1,20 @@
-<?php
-// Include the file containing the db class
+
+ <?php
+//Include the file containing the db class
 require('../config/dbcon.php');
 
 // Create database object
 $database = new db();
 
-if(isset($_GET["id"])) 
+if(isset($_POST['delete_product_btn'])) 
 {
-    $id = $_GET['id'];
+    $id = $_POST['product_id']; 
     $result = $database->delete("products", "id = $id");
     if ($result) {
+        echo "Product deleted successfully";
         
         
-        header("Location: products.php");
-
-        exit(); 
+        header( 'Location: products.php' ) ;    
     } else {
         echo "Failed to delete product.";
     }
@@ -22,4 +22,6 @@ if(isset($_GET["id"]))
 else {
     echo "ID is missing from the URL.";
 }
-?>
+?>   
+
+

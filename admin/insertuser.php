@@ -53,7 +53,7 @@ if (!preg_match('/^\d{3}$/', $Ext)) {
 
 // Validate image
 $img = $_FILES['image'] ?? '';
-$targetDirectory = "./imgs/";
+$targetDirectory = "../assests/images";
 $targetFile = $targetDirectory . $img['name'];
 if (move_uploaded_file($img['tmp_name'], $targetFile)) {
     $imagePath = $targetFile;

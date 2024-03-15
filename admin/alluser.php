@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User Table</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+
 <?php
+include('includes/header.php');
 // Connect with the database file
 require('db.php');
 $db = new Db(); 
@@ -39,7 +34,7 @@ $db = new Db();
                     echo "<tr>";
                     echo "<td>{$row['name']}</td>";
                     echo "<td>{$row['email']}</td>";
-                    echo "<td><img src='{$row['image']}' width='50' height='50'></td>"; // Path corrected from 'assests' to 'assets'
+                    echo "<td><img src='assests/images/{$row['image']}' width='50' height='50'></td>"; // Path corrected from 'assests' to 'assets'
                     echo "<td>{$row['room_number']}</td>"; // Display room number
                     echo "<td>{$row['Ext']}</td>"; // Corrected column name from 'Ext' to 'Ext'
                     echo "<td>

@@ -1,9 +1,18 @@
-<?php session_start();
+<?php
  //var_dump($_SESSION);
+ ob_start();
 include('includes/header.php')?>
 
 <?php
 require('../config/dbcon.php');
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
+
+    header("Location: ../login_page/login.php");
+    exit();
+}
+$user_id = $_SESSION["user_id"];
+$username = $_SESSION["username"];
+$image = $_SESSION["image"];
 
 if(isset($_POST['submit'])) {
     // Validation
@@ -75,7 +84,7 @@ if(isset($_POST['submit'])) {
       </div>
     </div>
 </div>
-
+<?php ob_end_flush()?>
 <?php include('includes/footer.php')?>
 
 
