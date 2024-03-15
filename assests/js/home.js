@@ -8,9 +8,17 @@ function getSum(total, num) {
 // Select order
 document.querySelectorAll('.allProducts .products .each-order').forEach(function(element) {
     element.addEventListener('click', function() {
+        let itemId = parseInt(this.getAttribute('data-product-id')); // Get the product ID from the data attribute
+        let alreadyChosen = document.querySelector(`input[name="product_id[]"][value="${itemId}"]`);
+        
+        // Check if the item has already been chosen
+        if (alreadyChosen) {
+            alert('You have already chosen this product.');
+            return; // Exit the function if the product is already chosen
+        }
+        
         let itemPrice = parseInt(this.querySelector('input').value);
         let itemName = this.querySelector('input').getAttribute('name');
-        let itemId = parseInt(this.getAttribute('data-product-id')); // Get the product ID from the data attribute
         let itemImageSrc = this.querySelector('img').getAttribute('src');
         let choosenItems = document.querySelector('.choosen-items ul');
         let newItem = document.createElement('li');
