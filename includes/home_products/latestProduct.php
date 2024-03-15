@@ -23,7 +23,7 @@ if ($stmtLatestOrderItems) {
     while ($row = $resultLatestOrderItems->fetch_assoc()) {
         echo '<div class="col-md-4">
                 <div class="card mb-4">
-                    <img src="../assests/images/' . $row['product_image'] . '" class="card-img-top" alt="' . $row['product_name'] . '" style="height: 130px; width:100%">
+                    <img src="../admin/assests/images/' . $row['product_image'] . '" class="card-img-top" alt="' . $row['product_name'] . '" style="height: 130px; width:100%">
                     <div class="card-body">
                         <h5 class="card-title">' . $row['product_name'] . '</h5>
                     </div>
