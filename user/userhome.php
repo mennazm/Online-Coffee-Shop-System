@@ -50,7 +50,7 @@ $image = $_SESSION["image"];
     <!-- home section -->
     <section class="home">
         <div class="content">
-            <h1 class="title">Fresh <span>Coffe</span> in the morning</h1>
+            <h1 class="title">Fresh <span>Coffee</span> in the morning</h1>
             <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, quo! Enim eius nostrum repellat mollitia esse dolorem veritatis, iste libero commodi incidunt nisi. Neque velit iste fugiat iusto, repellendus natus.</p>
             <a href="#products" class="btn"><button>Get started</button></a>
         </div>
