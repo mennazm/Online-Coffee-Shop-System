@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
         //display product array for test
        // var_dump($_POST);
         // Redirect to a confirmation page or perform other actions as needed
-        header("Location: '../../user/user-orders.php'");
+        header("Location: ../../user/user-orders.php");
         exit();
     }
 }

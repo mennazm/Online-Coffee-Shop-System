@@ -142,4 +142,17 @@ document.querySelector('.choosen-items').addEventListener('click', function(even
     }
 });
 
+
+// Form submission
+document.querySelector('form').addEventListener('submit', function(event) {
+    // Check if there are any selected items
+    let chosenItems = document.querySelectorAll('.choosen-items ul li');
+    if (chosenItems.length === 0) {
+        // Prevent form submission
+        event.preventDefault();
+        // Show alert
+        alert('You must choose an order before confirming.');
+    }
+});
+
 //* ////////////////////////////////////////////////////////////////////////

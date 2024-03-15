@@ -6,7 +6,7 @@
 body {
   background-color: #FBF8F2;   
 }
-nav {
+nav,footer {
   background-color: #93634C;
   color: #FBF8F2;
 }

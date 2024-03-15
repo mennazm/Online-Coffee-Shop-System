@@ -3,7 +3,7 @@ class db{
     private $host = "localhost";
     private $dbname = "cafeteria_project";
     private $username = "root";
-    private $password = "1234"; 
+    private $password = ""; 
     private $connection = null;
 
 function __construct() {
