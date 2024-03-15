@@ -16,55 +16,10 @@ $username = $_SESSION["username"];
 $image = $_SESSION["image"]; 
 
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>User</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
-	<link rel="stylesheet" href="../assests/css/orders.css";
-</head>
+<?php require('./header.php')?>
 
 <body>
-
-<nav class="navbar navbar-expand-lg ">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Cafeteria</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">My Orders</a>
-                    
-                </li>
-            </ul>
-            <div class="d-flex align-items-center">
-           
-		    <?php
-       		     try {
-                  
-                    echo "<img class='img-fluid w-30' src='../assests/images/$image' alt='$username' title='$username' width='50' height='50'/>";
-					echo "<p class='mt-3 mx-2'>$username</p>";
-        
-            } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
-            } 
-           
-            ?>
-			 
-			</div>
-        </div>
-    </div>
-</nav>
-
+    <?php require('../includes/navbar.php')?>
 <main class="my-orders mt-5">
     <section class="main-padding">
         <div class="container">
@@ -93,7 +48,7 @@ $image = $_SESSION["image"];
         </div>
     </section>
     <!-- orders -->
-    <section class="main-padding" class="mt-5">
+    <section class="main-padding my-5">
         <div class="container">
             <!-- user-orders -->
             <div class="user-orders">
@@ -241,10 +196,13 @@ $image = $_SESSION["image"];
                                 echo " <div class='each-order'>";
                                 echo "<img src='../assests/images/{$product['image']}' alt='{$product['name']}' />";
                                 echo "<h5>{$product['name']}</h5>";
-                                echo "<p>{$product['price']} LE</p>";
+                            
+                                
 								//$totalPriceOrder += $product['price']; // Add the price of each item to the total for this order
                                 $totalPriceOrder += $product['price'] * $orderitems['quantity'];
-                                echo "<p>Quantity: {$orderitems['quantity']}</p>";
+                            
+                                echo "<h6> Price: <span>{$product['price']} LE</span></h6>";
+                                echo "<h6> Quantity: <span>{$orderitems['quantity']}</span></h6>";
                                 echo "</div>";
                                 echo "</div>";
                             }
