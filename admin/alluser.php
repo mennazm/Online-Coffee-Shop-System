@@ -1,9 +1,15 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Table</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
 <?php
 include('includes/header.php');
 // Connect with the database file
-require('db.php');
-$db = new Db(); 
+require('../config/dbcon.php');
+$db = new db(); 
 ?>
 
 <div class="container">
@@ -52,6 +58,11 @@ $db = new Db();
 
         </tbody>
     </table>
+    <?php include('includes/footer.php')?>
+
 </div>
 </body>
 </html>
+
+
+

@@ -1,11 +1,11 @@
 <?php 
-require("db.php");
+require('../config/dbcon.php');
 
 // Create a new instance of the DB class
-$db = new DB();
+$db = new db();
 
 // Call the delete_row method to delete the user
-$result = $db->delete_row("users", "user_id = {$_GET['id']}");
+$result = $db->delete("users", "user_id = {$_GET['id']}");
 
 // Check if deletion was successful
 if ($result) {

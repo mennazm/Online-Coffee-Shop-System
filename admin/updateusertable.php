@@ -1,3 +1,7 @@
+<?php
+include('../includes/header.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,13 +20,11 @@
                     <form method="post" enctype="multipart/form-data" action="updateuser.php" onsubmit="return validateForm()">
                     <?php
                     // Include the database connection file
-                    require("db.php");
-
+                    require('../config/dbcon.php');
+                    $db = new db();
+                    
                     // Get the user ID from the URL parameter
                     $user_id = $_GET['id'];
-
-                    // Create a new instance of the DB class
-                    $db = new DB();
 
                     // Get the user data from the database
                     $user = $db->getdata("*", "users", "user_id = $user_id");
@@ -31,7 +33,7 @@
                         $row = mysqli_fetch_assoc($user); // Fetch the user data as an associative array
                     } else {
                         echo "User not found";
-                        exit(); // Exit if user not found
+                        exit(); 
                     }
                     ?>
 
@@ -104,5 +106,10 @@
         }
     </script>
 
+
 </body>
 </html>
+<?php
+include('../includes/footer.php');
+?>
+

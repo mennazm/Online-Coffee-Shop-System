@@ -1,18 +1,36 @@
+<?php
+session_start(); 
+require_once('../config/dbcon.php');
+$db = new db(); 
+
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
+
+    header("Location: ../login_page/login.php");
+    exit();
+}
+$user_id = $_SESSION["user_id"];
+$username = $_SESSION["username"];
+$image = $_SESSION["image"];
+
+?>
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>User</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-	   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
-    
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
 
   </head>
 
-  <body>
-    <main class="admin-orders">
-      <section class="main-padding">
+<body>
+<?php include('./includes/navbar.php')?>
+
+
+<main class="admin-orders">
+    <section class="main-padding">
         <div class="container">
           <h1>Orders</h1>
           <!-- ! table one  -->
@@ -206,29 +224,9 @@
             </tbody>
           </table>
         </div>
-      </section>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-          var toggleButtons = document.querySelectorAll('.toggle-details');
-          toggleButtons.forEach(function(button) {
-              button.addEventListener('click', function() {
-                  var icon = button.querySelector('i');
-                  var detailsRow = button.closest('tr').nextElementSibling;
-                  if (icon.classList.contains('fa-plus-square')) {
-                      icon.classList.remove('fa-plus-square');
-                      icon.classList.add('fa-minus-square');
-                      detailsRow.style.display = 'table-row';
-                  } else {
-                      icon.classList.remove('fa-minus-square');
-                      icon.classList.add('fa-plus-square');
-                      detailsRow.style.display = 'none';
-                  }
-              });
-          });
-      });
-      
-      </script>
-  </body>
+    </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="../assests/js/orders.js"></script>
+</body>
 </html>

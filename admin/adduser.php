@@ -1,10 +1,16 @@
+<?php
+session_start();
+$errors = $_SESSION['errors'] ?? [];
+include('../includes/header.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>User Registration</title>
- 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
   <script>
     function validate() {
       var a = document.getElementById("password").value;
@@ -34,15 +40,6 @@
 
   <div class="container">
     <h1 class="m-2 p-2">User Registration</h1>
-    <?php if (!empty($errors)): ?>
-    <div class="alert alert-danger">
-      <ul>
-        <?php foreach ($errors as $error): ?>
-          <li><?= $error ?></li>
-        <?php endforeach; ?>
-      </ul>
-    </div>
-    <?php endif; ?>
     <div class="container">
       <form class="p-3 m-4" action="insertuser.php" method="POST" enctype="multipart/form-data" onsubmit="return validate()">
         <div class="row">
@@ -65,10 +62,23 @@
           <div class="mb-3 col-6">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password_hash">
+            <?php if(isset($errors['password_hash'])): ?>
+              <div class="text-danger"><?= $errors['password_hash'] ?></div>
+            <?php endif; ?>
+            <?php if(isset($errors['match'])): ?>
+              <div class="text-danger"><?= $errors['match'] ?></div>
+            <?php endif; ?>
           </div>
           <div class="mb-3 col-6">
             <label for="confirm_password" class="form-label">Confirm Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+            <?php if(isset($errors['password_hash'])): ?>
+              <div class="text-danger"><?= $errors['password_hash'] ?></div>
+            <?php endif; ?>
+            <?php if(isset($errors['match'])): ?>
+              <div class="text-danger"><?= $errors['match'] ?></div>
+            <?php endif; ?>
+
           </div>
         </div>
         <div class="row">
@@ -85,6 +95,13 @@
               }
               ?>
             </select>
+            <?php if(isset($errors['matching'])): ?>
+              <div class="text-danger"><?= $errors['matching'] ?></div>
+            <?php endif; ?>
+            <?php if(isset($errors['room_number'])): ?>
+              <div class="text-danger"><?= $errors['room_number'] ?></div>
+            <?php endif; ?>
+
           </div>
 
           <div class="mb-3">
@@ -98,6 +115,15 @@
               }
               ?>
             </select>
+            <?php if(isset($errors['matching'])): ?>
+              <div class="text-danger"><?= $errors['matching'] ?></div>
+            <?php endif; ?>
+
+            <?php if(isset($errors['Ext'])): ?>
+              <div class="text-danger"><?= $errors['Ext'] ?></div>
+            <?php endif; ?>
+
+
           </div>
         </div>
         <div class="row">
@@ -115,3 +141,5 @@
   </div>
 </body>
 </html>
+<?php include('../includes/footer.php');?>
+

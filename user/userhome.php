@@ -34,10 +34,10 @@ $image = $_SESSION["image"];
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link active" href="userhome.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">My Orders</a>
+                        <a class="nav-link" href="user-orders.php">My Orders</a>
                     </li>
                 </ul>
                 <div class="user-info">
@@ -50,7 +50,7 @@ $image = $_SESSION["image"];
     <!-- home section -->
     <section class="home">
         <div class="content">
-            <h1 class="title">Fresh <span>Coffe</span> in the morning</h1>
+            <h1 class="title">Fresh <span>Coffee</span> in the morning</h1>
             <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, quo! Enim eius nostrum repellat mollitia esse dolorem veritatis, iste libero commodi incidunt nisi. Neque velit iste fugiat iusto, repellendus natus.</p>
             <a href="#products" class="btn"><button>Get started</button></a>
         </div>
@@ -127,9 +127,11 @@ $image = $_SESSION["image"];
            </div>
        </div>
     </div>
+    <?php include('footer.php');?>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="../assests/js/home.js"></script>
+    
 </body>
 </html>

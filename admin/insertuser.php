@@ -1,8 +1,8 @@
 <?php
 // calling database and make connection
-require("db.php");
-$db = new Db();
-$connection = $db->get_connection();
+require('../config/dbcon.php');
+$db = new db();
+$connection = $db->getconnection();
 
 // checks if there are any errors
 $errors = [];
@@ -31,7 +31,7 @@ if (empty($password)) {
 
 // Check if passwords match
 if ($password !== $confirm_password) {
-    $errors["confirm_password"] = "Passwords do not match";
+    $errors["match"] = "Passwords do not match";
 }
 // Validation on email
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -40,15 +40,21 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 // Validate room number
 $room_number = validate_data($_POST['room_number'] ?? '');
-if (!preg_match('/^\d{3}$/', $room_number)) {
-    $errors["room_number"] = "Room number must be three digits";
+if ($room_number === "") {
+    $errors["room_number"] = "you must choose room number";
 }
 
 // Validate Ext
 $Ext = validate_data($_POST['Ext'] ?? '');
-if (!preg_match('/^\d{3}$/', $Ext)) {
-    $errors["Ext"] = "Extension must be three digits";
+if ($Ext=== " ") {
+    $errors["Ext"] = "you must choose Extention number";
 }
+
+// Check if room_number and Ext match
+if ($room_number !== $Ext) {
+    $errors['matching'] = "Room number and Extension must match";
+}
+
 
 
 // Validate image
@@ -61,10 +67,13 @@ if (move_uploaded_file($img['tmp_name'], $targetFile)) {
     $errors['img_upload'] = "Failed to upload image";
 }
 
+
+
 // Check if there are any errors
 if (empty($errors)) {
     // Get the room ID from the 'rooms' table
-    $room_id_result = $db->get_data_custom("SELECT room_id FROM rooms WHERE room_number = '$room_number' AND Ext = '$Ext'");
+    $room_id_result = $db->getdata("room_id", "rooms", "room_number = '$room_number' AND Ext = '$Ext'");
+    // $room_id_result = $db->get_data_custom("SELECT room_id FROM rooms WHERE room_number = '$room_number' AND Ext = '$Ext'");
     if ($room_id_result && $room_id_result->num_rows > 0) {
         $room_data = $room_id_result->fetch_assoc();
         $room_id = $room_data['room_id'];
@@ -107,3 +116,4 @@ function validate_data($data){
     return $data;
 }
 ?>
+
