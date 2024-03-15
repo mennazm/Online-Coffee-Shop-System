@@ -56,8 +56,6 @@ $image = $_SESSION["image"];
                        /*  echo "<pre>";
                         var_dump($result->fetch_assoc());
                 echo "</pre>"; */
-                
-          
        
                    while ($row = $result->fetch_assoc()) {
                     
@@ -81,22 +79,19 @@ $image = $_SESSION["image"];
                         echo "<div class='row order-items'>";
                         // Fetch order details for the current order
                         $orderProducts = $db->getOrderProducts($row['order_id']);
-                       // var_dump($orderProducts->fetch_assoc());
-                      
-                        $orderitems=$db->getdata("*","order_items","order_id={$row['order_id']}")->fetch_assoc();
-                       // var_dump($orderitems);
                         $totalPrice = 0; // Initialize total price
                         if ($orderProducts->num_rows > 0) {
-                           //var_dump($orderProducts->fetch_assoc());
                             while ($order_detail = $orderProducts->fetch_assoc()) {
+                                // Fetch order item for the current product
+                                $orderItem = $db->getdata("*", "order_items", "order_id={$row['order_id']} AND product_id={$order_detail['product_id']}")->fetch_assoc();
+                                
                                 echo "<div class='col-sm-3'>";
                                 echo "<div class='each-order'>";
                                 echo "<img src='./assests/images/{$order_detail['image']}' alt='{$order_detail['name']}' />";
                                 echo "<h4>{$order_detail['name']}</h4>";
                                 echo "<h6> Price: <span>{$order_detail['price']} LE</span></h6>";
-                                $totalPrice += $order_detail['price'] * $orderitems['quantity']; // Add the price of each item to the total
-                                echo "<h6> Quantity: <span>{$orderitems['quantity']}</span></h6>";
-                            
+                                echo "<h6> Quantity: <span>{$orderItem['quantity']}</span></h6>";
+                                $totalPrice += $order_detail['price'] * $orderItem['quantity']; // Add the price of each item to the total
                                 echo "</div>";
                                 echo "</div>";
                             }
@@ -114,7 +109,7 @@ $image = $_SESSION["image"];
                         $deliveredOrdersFound = true; // Set the flag to true if delivered orders are found
                     }
                 }
-                echo "</tbody>";
+                   echo "</tbody>";
                         echo "</table>";
             } 
             if (!$deliveredOrdersFound) { // Display message if no delivered orders are found
