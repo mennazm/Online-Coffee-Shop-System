@@ -13,7 +13,6 @@ if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role
 $user_id = $_SESSION["user_id"];
 $username = $_SESSION["username"];
 $image = $_SESSION["image"];
-include('includes/navbar.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
