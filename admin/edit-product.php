@@ -63,7 +63,7 @@ if(empty($errors)) {
 
     // Update data in the database
     $tableName = 'products';
-    $condition = "product_id=$product_id"; // Condition to identify the row to update
+    $condition = "product_id=$id"; // Condition to identify the row to update
     $result = $database->update_data($tableName, $values, $condition);
  
     if($result) {
@@ -87,8 +87,9 @@ if(empty($errors)) {
 
 
 // Fetch product details for editing
-if(isset($_GET["id"])) { // Change "product_id" to "id"
+if(isset($_GET["id"])) {
     $product_id = $_GET["id"]; // Fetch product_id from the URL
+
     $product = $database->getbyid("products", $product_id);
    
     if ($product && $product->num_rows > 0) {
@@ -105,7 +106,8 @@ if(isset($_GET["id"])) { // Change "product_id" to "id"
                             <div class="row"  style="margin-left:25%">
                                 <div class="col-md-8">
                                     <form method="post" enctype="multipart/form-data">  
-                                        <input type="hidden" name="id" value="<?php echo $id; ?>"> 
+                                    <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+
                                          <div class="form-group">
                                             <label for="name">Name</label>
                                             <input type="text" name="name" class="form-control" value="<?php echo $row['name']; ?>">
