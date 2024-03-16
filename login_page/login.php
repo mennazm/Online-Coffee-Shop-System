@@ -72,22 +72,21 @@ if (!empty($errors)) {
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
 
   <style>
-   .image {
-  background-image: url('images/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; /* Set background image to not repeat */
-}
+   .main_sec{
+    background-image: url('../assests/images/back9.jpg');
+     background-size: cover;
+   }
 
 .card {
   border-radius: 1rem;
   max-width: 500px;
   margin: auto;
-  margin-top:60px;
-  margin-right:34%;
+  margin-left: 50vw;
+
   box-shadow: 0 4px 7px rgba(0, 0, 0, 0.3);
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color:rgba(75, 40, 30, 0.7);
+  height: 80vh;
 }
 
 .card-body {
@@ -114,12 +113,14 @@ button.btn {
       border-radius: 15px;
       color:white;
       width:35%;
-      background-color:rgba(0,0,0,0.7);
+      background-color:#4b281e;
       border:none;
       border-radius:10px;
-      box-shadow:inset -3px -3px rgba(0,0,0,0.7);
     }
 
+button.btn:hover {
+  background-color:#4b281e;
+}
 .login-heading {
   text-align: center;
   margin-bottom: 2rem;
@@ -132,13 +133,13 @@ a {
 }
 
 a:hover {
-  text-decoration: underline;
+  color: #4b281e; 
 }
 
   </style>
 </head>
-<body>
-  <section class="vh-100 image">
+<body >
+  <section class="vh-100 image main_sec">
     <div class="container py-5">
       <div class="row d-flex justify-content-center">
         <div class="col">
@@ -166,7 +167,7 @@ a:hover {
    <!-- ظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظ -->
 
 
-              <form class="p-4" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+              <form class="p-4" action="" method="post">
               
                   <div  role="alert">
                       

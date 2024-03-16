@@ -36,7 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <style>
       body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    background-image: url('../assests/images/back9.jpg');
+     background-size: cover;
     margin: 0;
     padding: 0;
     display: flex;
@@ -55,9 +56,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 
-form {
+.container {
     display: inline-block; /* To make form elements display inline */
     margin-right:7%;
+    max-width: 500px;
+  margin: auto;
+  margin-left: 60vw;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  background-color:rgba(75, 40, 30, 0.7);
     
 }
 
@@ -86,10 +93,17 @@ input[type="submit"] {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+
+    border-radius: 15px;
+      color:white;
+      width:35%;
+      background-color:#4b281e;
+      border:none;
+      border-radius:10px;
 }
 
 input[type="submit"]:hover {
-    background-color: #0056b3;
+  background-color:#4b281e;
 }
  /* Bootstrap error message styling */
  .error {
