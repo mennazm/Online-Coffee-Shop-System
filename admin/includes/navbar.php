@@ -55,6 +55,9 @@ input[name='filter']{
                     <a class="nav-link" href="./alluser.php">Users</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="./listAllrooms.php">Rooms</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="./admin_orders.php">Manual orders</a>
                 </li>
                 <li class="nav-item">

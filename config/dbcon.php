@@ -48,12 +48,36 @@ function insert_data($tableName, $columns, $values){
 
     // Insert a row into a table
     function insert_row($table_name, $data) {
+        // Check if the table name is 'users' and if so, replace 'room_number' with 'room_id' and 'Ext' with 'room_id'
+        if ($table_name === 'users') {
+            // Fetch the room_id based on the room_number provided in the data array
+            $room_number = $data['room_number'];
+            $Ext = $data['Ext'];
+            $room_query = "SELECT room_id FROM rooms WHERE room_number = '$room_number' AND Ext = '$Ext'";
+            $room_result = $this->connection->query($room_query);
+    
+            if ($room_result && $room_result->num_rows > 0) {
+                $room_row = $room_result->fetch_assoc();
+                $data['room_id'] = $room_row['room_id'];
+                // Remove 'room_number' and 'Ext' from the data array
+                unset($data['room_number']);
+                unset($data['Ext']);
+            } else {
+                // Handle error if room_number and Ext combination is not found in the rooms table
+                error_log("Combination of room number '$room_number' and Ext '$Ext' not found in the rooms table");
+                return false;
+            }
+        }
+    
+        // Prepare the keys and values for the query
         $keys = implode(", ", array_keys($data));
         $values = "'" . implode("', '", array_values($data)) . "'";
         $query = "INSERT INTO $table_name ($keys) VALUES ($values)";
+    
+        // Execute the query and return the result
         return $this->connection->query($query);
     }
-
+    
  
 
     function update_data($tableName, $columns_values, $condition=1) { 

@@ -1,8 +1,20 @@
 <?php
-session_start();
-$errors = $_SESSION['errors'] ?? [];
-include('../includes/header.php');
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
+
+header("Location: ../login_page/login.php");
+exit();
+}
+//var_dump($_SESSION);
+$user_id = $_SESSION["user_id"];
+$username = $_SESSION["username"];
+$image = $_SESSION["image"];
+include('includes/navbar.php');
 ?>
+<?php
+$errors = $_SESSION['errors'] ?? [];
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +25,9 @@ include('../includes/header.php');
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
+<?php
+ include('includes/header.php');
+?>    <div class="container mt-5">
         <h1>Add Room</h1>
         <form action="insertroom.php" method="POST" onsubmit="return validateForm();">
             <div class="mb-3">
