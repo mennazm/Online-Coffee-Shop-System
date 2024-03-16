@@ -1,3 +1,5 @@
+<?php session_start()
+?>
 <?php
 if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
 
@@ -25,9 +27,7 @@ $errors = $_SESSION['errors'] ?? [];
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body>
-<?php
- include('includes/navbar.php');
-?>    <div class="container mt-5">
+    <div class="container mt-5">
         <h1>Add Room</h1>
         <form action="insertroom.php" method="POST" onsubmit="return validateForm();">
             <div class="mb-3">

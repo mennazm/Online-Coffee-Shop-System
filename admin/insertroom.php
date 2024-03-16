@@ -1,4 +1,5 @@
 <?php
+
 require('../config/dbcon.php');
 
 $errors = [];

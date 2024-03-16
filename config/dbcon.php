@@ -79,14 +79,40 @@ function insert_data($tableName, $columns, $values){
     }
     
  
-
     function update_data($tableName, $columns_values, $condition=1) { 
-        $setClause = implode(', ', array_map(function ($column, $value) { 
-            return "$column=" . (is_null($value) ? "NULL" : "'$value'"); 
-        }, array_keys($columns_values), $columns_values)); 
-        
-        return $this->connection->query("UPDATE $tableName SET $setClause WHERE $condition"); 
+        // Check if the table name is 'users' and if so, replace 'room_number' with 'room_id' and 'Ext' with 'room_id'
+        if ($tableName === 'users') {
+            // Fetch the room_id based on the room_number provided in the data array
+            if (isset($columns_values['room_number']) && isset($columns_values['Ext'])) {
+                $room_number = $columns_values['room_number'];
+                $Ext = $columns_values['Ext'];
+                $room_query = "SELECT room_id FROM rooms WHERE room_number = '$room_number' AND Ext = '$Ext'";
+                $room_result = $this->connection->query($room_query);
+    
+                if ($room_result && $room_result->num_rows > 0) {
+                    $room_row = $room_result->fetch_assoc();
+                    $columns_values['room_id'] = $room_row['room_id'];
+                    // Remove 'room_number' and 'Ext' from the columns_values array
+                    unset($columns_values['room_number']);
+                    unset($columns_values['Ext']);
+                } else {
+                    // Handle error if room_number and Ext combination is not found in the rooms table
+                    error_log("Combination of room number '$room_number' and Ext '$Ext' not found in the rooms table");
+                    return false;
+                }
+            }
+        }
+    
+        // Construct the SET clause for the update query
+        $setClause = implode(', ', array_map(function ($column, $value) {
+            return "$column=" . (is_null($value) ? "NULL" : "'$value'");
+        }, array_keys($columns_values), $columns_values));
+    
+        // Execute the update query
+        return $this->connection->query("UPDATE $tableName SET $setClause WHERE $condition");
     }
+    
+
     
 
 

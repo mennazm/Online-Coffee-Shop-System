@@ -1,3 +1,5 @@
+<?php session_start()
+?>
 <?php
 if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
 
@@ -19,7 +21,6 @@ include('includes/navbar.php');
 
 <body>
 <?php
-include('includes/navbar.php');
 require('../config/dbcon.php');
 $db = new db(); 
 ?>
