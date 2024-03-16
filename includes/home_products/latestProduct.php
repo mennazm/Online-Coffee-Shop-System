@@ -10,7 +10,7 @@ $latestOrderItemsQuery = "SELECT p.name AS product_name, p.image AS product_imag
                           JOIN products p ON oi.product_id = p.id
                           WHERE oi.order_id IN (SELECT order_id FROM orders WHERE user_id = ?)
                           ORDER BY oi.order_item_id DESC
-                          LIMIT 2"; 
+                          LIMIT 3"; 
 
 $stmtLatestOrderItems = $database->getConnection()->prepare($latestOrderItemsQuery);
 
