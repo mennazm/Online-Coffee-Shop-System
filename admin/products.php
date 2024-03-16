@@ -1,6 +1,6 @@
 <?php
 ob_start();
-
+session_start();
 include('includes/header.php');
 
 ?>
@@ -8,6 +8,7 @@ include('includes/header.php');
 require('../config/dbcon.php');
 
 $db = new db(); 
+
 if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
 
     header("Location: ../login_page/login.php");
@@ -16,9 +17,9 @@ if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role
 $user_id = $_SESSION["user_id"];
 $username = $_SESSION["username"];
 $image = $_SESSION["image"];
+include('includes/navbar.php');
 
 ?>
-
 
 <div style="background-color:#FBF8F2" class="container bg-body mt-3">
 
@@ -31,16 +32,17 @@ $image = $_SESSION["image"];
       
         <div class="card-body">
             <table class="table table-bordered">
-            <tr>
-                   
+                <thead>
+                <tr>
                     <th>Product Name</th>
-                    <th>price</th>
+                    <th>Price</th>
                     <th>Status</th>
                     <th>Image</th>
                     <th>Actions</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
+          
                 <?php
                 $result = $db->getdata("*", "products", ""); 
                 if ($result->num_rows > 0) {
@@ -51,9 +53,8 @@ $image = $_SESSION["image"];
                         echo "<td>{$row['status']}</td>";
                         echo "<td><img src='assests/images/{$row['image']}'  width='50' height='50'></td>";
                         echo "<td>
-                                <a href='edit-product.php?id={$row['id']}' class='btn btn-primary'>Edit</a>
-            
-                                <button type='button' class='btn btn-danger delete_product_btn' value='{$row['id']}'>Delete</button>
+                              <a href='edit-product.php?id={$row['id']}' class='btn btn-primary'>Edit</a>
+                              <button class='btn btn-danger' onclick='confirmDelete({$row['id']})'>Delete</button>
                             </td>";
                         echo "</tr>";
                     }
@@ -62,12 +63,41 @@ $image = $_SESSION["image"];
                 }
                 ?>
                 
-            </tbody>
+                </tbody>
             </table>
         </div>
        </div>
-</div>
+    </div>
 </div>
 
 <?php ob_end_flush()?>
 <?php include('includes/footer.php')?>
+
+
+
+<!-- JavaScript function for SweetAlert confirmation -->
+<script>
+function confirmDelete(productId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Submit the form when user confirms
+            document.getElementById('product_id').value = productId;
+            document.getElementById('deleteForm').submit();
+        }
+    });
+}
+</script>
+
+<!-- Form for deleting product -->
+<form id='deleteForm' method='post' action='delete_product.php' style='display: none;'>
+    <input type='hidden' id='product_id' name='product_id' value=''>
+    <input type='hidden' name='delete_product_btn'>
+</form>

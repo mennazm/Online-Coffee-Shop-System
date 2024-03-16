@@ -73,7 +73,7 @@ if (!empty($errors)) {
 
   <style>
    .image {
-  background-image: url('images/background.jpg');
+  background-image: url('../assests/images/back9.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; /* Set background image to not repeat */

@@ -63,14 +63,14 @@ if(isset($_POST['submit'])) {
 
 ?>
 <div class="container mt-3">
-    <div class="row">
+    <div style="margin-top:10%" class="row">
       <div class ="col-md-12">
         <div class="card">
             <div class="card-header">
                 <h4>Add Category</h4>
             </div>
             <div class="card-body">
-                <div class="row">
+                <div class="row"style="margin-left:30%">
                     <div class="col-md-6">
                         <form method="post">  
                             <label for="">Name</label>

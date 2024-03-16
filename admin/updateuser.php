@@ -1,5 +1,7 @@
 
 <?php
+
+session_start();
 require('../config/dbcon.php');
 $db = new db();
 
@@ -9,14 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $email = $_POST['email'];
     $room_number = $_POST['room_number'];
     $Ext = $_POST['Ext'];
-
+    var_dump($_POST);
     // Get the current image path from the form
     $current_image = $_POST['image'];
 
   //*********************the validation */
     // Check if room_number and Ext match
-  if ($room_number !== $Ext) {
-    $errors['matching'] = "Room number and Extension must match";
+//   if ($room_number !== $Ext) {
+//     $errors['matching'] = "Room number and Extension must match";
 }
 // name
 if (strlen($name) < 5) {
@@ -94,5 +96,5 @@ if (move_uploaded_file($img['tmp_name'], $targetFile)) {
     } else {
         echo "Invalid room number or extension.";
     }
-}
+
 ?>

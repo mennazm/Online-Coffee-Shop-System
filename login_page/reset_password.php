@@ -34,7 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Reset Password</title>
     <style>
+
+    
       body {
+     
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     margin: 0;

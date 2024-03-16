@@ -1,6 +1,6 @@
 <?php 
 ob_start();
-
+session_start();
 include('includes/header.php');
 
 // Clear session errors
@@ -19,7 +19,7 @@ if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role
 $user_id = $_SESSION["user_id"];
 $username = $_SESSION["username"];
 $image = $_SESSION["image"];
-
+include('includes/navbar.php');
 // Check if the form is submitted
 if(isset($_POST['submit'])) {
     $errors = array();
@@ -102,8 +102,8 @@ if(isset($_GET["id"]))
                             <h4>Edit Product</h4>
                         </div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="row"  style="margin-left:25%">
+                                <div class="col-md-8">
                                     <form method="post" enctype="multipart/form-data">  
                                         <input type="hidden" name="id" value="<?php echo $id; ?>"> 
                                          <div class="form-group">
@@ -187,4 +187,5 @@ else {
 
 ?>
 <?php ob_end_flush()?>
+
 <?php include('includes/footer.php')?>

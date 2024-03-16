@@ -1,7 +1,7 @@
 <?php
-
+session_start();
 require_once('../config/dbcon.php');
-include('includes/header.php');
+
 $database = new db(); 
 
 if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
@@ -9,10 +9,11 @@ if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role
     header("Location: ../login_page/login.php");
     exit();
 }
+
 $user_id = $_SESSION["user_id"];
 $username = $_SESSION["username"];
 $image = $_SESSION["image"];
-
+include('includes/navbar.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,27 +26,34 @@ $image = $_SESSION["image"];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Cafetria</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">My Orders</a>
-                    </li>
-                </ul>
-           
-        </div>
-            </div>
-        </div>
-    </nav> -->
+    
+<style>
+    body{
+    background-color: #FBF8F2;
+}
+nav,footer{
+    background-color: #93634C;
+    color: #FBF8F2;
+}
+.navbar a{
+    
+    color: #FBF8F2;
+}
+.navbar a:hover{
+    color: #FBF8F2;
+}
+h1,h2,h3,h4,h5,th{
+    color: #4b281e;
+}
+.each-order img{
+    width: 20vw;
+    height: 30vh;
+}
+input[name='filter']{
+    background-color: #93634C;
+}
+</style>
+ 
     <!-- home section -->
     <section class="home">
         <div class="content">
@@ -129,7 +137,7 @@ $image = $_SESSION["image"];
                  <div class="products" id="products">
                       <h1>Main menu</h1>
                       <div class="row">
-                      <?php include  '../includes/home_products/allproducts.php'?>
+                      <?php include  ('../includes/home_products/allproducts.php')?>
                      </div>
                  </div>
              </div>

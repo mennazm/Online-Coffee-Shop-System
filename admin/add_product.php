@@ -1,6 +1,6 @@
 <?php 
 ob_start();
-
+session_start();
 //var_dump($_SESSION);
 include('includes/header.php')?>
 
@@ -18,7 +18,7 @@ if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role
 $user_id = $_SESSION["user_id"];
 $username = $_SESSION["username"];
 $image = $_SESSION["image"];
-
+include('includes/navbar.php');
 
 // Check if the form is submitted
 if(isset($_POST['submit'])) {
@@ -96,8 +96,8 @@ if(isset($_POST['submit'])) {
                     <h4>Add Product</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div style="margin-left:25%" class="row ">
+                        <div class="col-md-9 ">
                             <form method="post" enctype="multipart/form-data">  
                                 <div class="form-group">
                                     <label for="name">Name</label>

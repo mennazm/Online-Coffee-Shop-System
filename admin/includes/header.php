@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,13 +32,35 @@
 
 
  
-    .navbar a{
-			
-			color: #FBF8F2 !important;
-		}
+   
   
-
+    body{
+    background-color: #FBF8F2;
+}
+nav{
+    background-color: #93634C;
+    color: #FBF8F2;
+}
+.navbar a{
+    
+    color: #FBF8F2 !important;
+}
+.navbar a:hover{
+    color: #FBF8F2;
+}
+h1,h2,h3,h4,h5,th{
+    color: #4b281e;
+}
+.each-order img{
+    width: 20vw;
+    height: 30vh;
+}
+input[name='filter']{
+    background-color: #93634C;
+}
 </style>
+
+
 
 
 
@@ -47,5 +69,5 @@
 <body class="g-sidenav-show " style="background-color:#FBF8F2">
     <?php  include ('sidebar.php'); ?>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius ">
-    <?php  include ('navbar.php'); ?>
+   
     
