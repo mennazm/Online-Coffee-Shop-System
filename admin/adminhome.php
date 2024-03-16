@@ -1,7 +1,7 @@
 <?php
-
+session_start(); 
 require_once('../config/dbcon.php');
-include('includes/header.php');
+
 $database = new db(); 
 
 if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
@@ -25,6 +25,10 @@ $image = $_SESSION["image"];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+
+
+<?php require('./includes/navbar.php')?>;
+
     <!-- <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="#">Cafetria</a>
@@ -47,9 +51,10 @@ $image = $_SESSION["image"];
         </div>
     </nav> -->
     <!-- home section -->
+   
     <section class="home">
         <div class="content">
-            <h1 class="title">Fresh <span>Coffe</span> in the morning</h1>
+            <h1 class="title">Fresh <span>Coffee</span> in the morning</h1>
             <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, quo! Enim eius nostrum repellat mollitia esse dolorem veritatis, iste libero commodi incidunt nisi. Neque velit iste fugiat iusto, repellendus natus.</p>
             <a href="#products" class="btn"><button>Get started</button></a>
         </div>
