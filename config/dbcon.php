@@ -20,6 +20,30 @@ function getconnection(){
 function delete($tablename , $condition){
   return  $this->connection->query("DELETE FROM $tablename WHERE  $condition");
 }
+function deleteuser($tablename , $condition){
+    if($tablename == 'users') {
+        // Extract user ID from condition
+        $user_id = explode('=', $condition)[1];
+        
+        // Check if the user has any orders
+        $userOrders = $this->getUserOrders($user_id);
+        if($userOrders && $userOrders->num_rows > 0) {
+            // User has orders, delete them first
+            while($order = $userOrders->fetch_assoc()) {
+                $order_id = $order['order_id'];
+                
+                // Delete order items associated with this order
+                $this->deleteuser('order_items', "order_id = $order_id");
+                
+                // Delete the order
+                $this->deleteuser('orders', "order_id = $order_id");
+            }
+        }
+    }
+    
+    // Now delete the user
+    return $this->connection->query("DELETE FROM $tablename WHERE $condition");
+}
 
 function getdata($cols, $tablename, $condition=1){
     $query = "SELECT $cols FROM $tablename";

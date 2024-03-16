@@ -49,7 +49,8 @@ $db = new db();
                         <?php
                                                 $query = "SELECT u.*, r.room_number, r.Ext 
                                                 FROM users u 
-                                                LEFT JOIN rooms r ON u.room_id = r.room_id";
+                                                LEFT JOIN rooms r ON u.room_id = r.room_id
+                                                WHERE u.role = 'user'";
                                       
                         $result = $db->get_data_custom($query);
 

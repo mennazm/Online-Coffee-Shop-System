@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
 
 header("Location: ../login_page/login.php");
@@ -8,7 +9,6 @@ exit();
 $user_id = $_SESSION["user_id"];
 $username = $_SESSION["username"];
 $image = $_SESSION["image"];
-include('includes/navbar.php');
 ?>
 <?php
 //session_start();
