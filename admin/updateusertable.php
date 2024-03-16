@@ -29,6 +29,12 @@ unset($_SESSION['errors']); // Clear the errors array after displaying errors
     <title>Update User</title>
     <!-- Assuming you have Bootstrap CSS included -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+       #thebutton{
+        background-color: #4b281e;
+        color:#FBF8F2;
+    }
+</style>
 </head>
 <body>
 <?php
@@ -118,7 +124,7 @@ unset($_SESSION['errors']); // Clear the errors array after displaying errors
                             <?php if(isset($errors['matching'])) echo '<div class="text-danger">'.$errors['matching'].'</div>'; ?> <!-- Display matching validation error -->
 
                         </div>
-                        <button type="submit" class="btn btn-lg btn-danger">Update</button>
+                        <button type="submit" class="btn" id='thebutton'>Update</button>
                     </form>
                 </div>
             </div>

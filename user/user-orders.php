@@ -16,6 +16,7 @@ $username = $_SESSION["username"];
 $image = $_SESSION["image"]; 
 
 ?>
+<title>My orders</title>
 <?php require('./header.php')?>
 
 <body>
@@ -117,7 +118,7 @@ $image = $_SESSION["image"];
                             //var_dump($orderitems);
                             foreach ($orderProducts as $product) {
                                 // Fetch order items for the current product
-                                $orderItem = $db->getdata("*", "order_items", "order_id={$order['order_id']} AND 	product_id={$product['product_id']}")->fetch_assoc();
+                                $orderItem = $db->getdata("*", "order_items", "order_id={$order['order_id']} AND product_id={$product['product_id']}")->fetch_assoc();
                             
                                 // Check if order item exists
                                 if ($orderItem) {

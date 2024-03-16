@@ -35,7 +35,6 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,'Beverages'),(2,'Snacks'),(3,'Desserts');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +112,6 @@ CREATE TABLE `products` (
   `price` decimal(10,2) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `category_id` int DEFAULT NULL,
-  `Ext` int DEFAULT NULL,
   PRIMARY KEY (`product_id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`)
@@ -150,7 +148,6 @@ CREATE TABLE `rooms` (
 
 LOCK TABLES `rooms` WRITE;
 /*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
-INSERT INTO `rooms` VALUES (1,101,NULL),(2,102,NULL),(3,103,NULL);
 /*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +165,6 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `role` enum('admin','user') NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `Ext` int DEFAULT NULL,
   `room_id` int DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `unique_email` (`email`),
@@ -183,7 +179,6 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'haidy','hashed_password_1','ahmed@email.com','user',NULL,NULL,NULL),(2,'Fatima','hashed_password_2','fatima@email.com','admin',NULL,NULL,NULL),(3,'sohila','hashed_password_3','sohila@email.com','user',NULL,NULL,NULL),(4,'menna','hashed_password_4','menna@email.com','user',NULL,NULL,NULL),(5,'maghfera','hashed_password_5','maghfera@email.com','user',NULL,NULL,NULL),(6,'John Doe','hashed_password','john@example.com','user','profile_pic.jpg',1234,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

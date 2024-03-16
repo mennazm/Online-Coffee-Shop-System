@@ -7,7 +7,7 @@ $user_id = $_SESSION["user_id"];
 // Query to retrieve the latest order items for the user 
 $latestOrderItemsQuery = "SELECT p.name AS product_name, p.image AS product_image
                           FROM order_items oi
-                          JOIN products p ON oi.product_id = p.id
+                          JOIN products p ON oi.product_id = p.product_id
                           WHERE oi.order_id IN (SELECT order_id FROM orders WHERE user_id = ?)
                           ORDER BY oi.order_item_id DESC
                           LIMIT 3"; 

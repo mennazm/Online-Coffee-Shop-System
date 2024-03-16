@@ -83,22 +83,26 @@ $image = $_SESSION["image"];
                         $orderProducts = $db->getOrderProducts($row['order_id']);
                        // var_dump($orderProducts->fetch_assoc());
                       
-                        $orderitems=$db->getdata("*","order_items","order_id={$row['order_id']}")->fetch_assoc();
+                        //$orderitems=$db->getdata("*","order_items","order_id={$row['order_id']}")->fetch_assoc();
                        // var_dump($orderitems);
                         $totalPrice = 0; // Initialize total price
                         if ($orderProducts->num_rows > 0) {
                            //var_dump($orderProducts->fetch_assoc());
                             while ($order_detail = $orderProducts->fetch_assoc()) {
+                                $orderItem = $db->getdata("*", "order_items", "order_id={$row['order_id']} AND product_id={$order_detail['product_id']}")->fetch_assoc();
+                                if ($orderItem) {
                                 echo "<div class='col-sm-6 col-md-3'>";
                                 echo "<div class='each-order'>";
                                 echo "<img src='./assests/images/{$order_detail['image']}' class='w-75'  alt='{$order_detail['name']}' />";
                                 echo "<h4>{$order_detail['name']}</h4>";
                                 echo "<h6> Price: <span>{$order_detail['price']} LE</span></h6>";
-                                $totalPrice += $order_detail['price'] * $orderitems['quantity']; // Add the price of each item to the total
-                                echo "<h6> Quantity: <span>{$orderitems['quantity']}</span></h6>";
+
+                                $totalPrice += $order_detail['price'] * $orderItem['quantity']; // Add the price of each item to the total
+                                echo "<h6> Quantity: <span>{$orderItem['quantity']}</span></h6>";
                             
                                 echo "</div>";
                                 echo "</div>";
+                                }
                             }
                         } 
                              // Display total price
