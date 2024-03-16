@@ -11,7 +11,7 @@ $image = $_SESSION["image"];
 include('includes/navbar.php');
 ?>
 <?php
-include('includes/header.php');
+include('includes/navbar.php');
 
 ?>
 <!DOCTYPE html>

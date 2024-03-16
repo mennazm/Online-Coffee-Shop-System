@@ -20,7 +20,7 @@ include('includes/navbar.php');
 <body>
     <?php
  //   session_start();
-    include('includes/header.php');
+    include('includes/navbar.php');
     ?>
     <div class="container mt-5 p-2">
         <!-- Room Table -->

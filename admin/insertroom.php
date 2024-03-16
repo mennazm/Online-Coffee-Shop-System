@@ -16,10 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors['room_number'] = "Room number is required";
     } elseif (!preg_match('/^\d{3}$/', $room_number)) {
         $errors['room_number'] = "Room number must consist of three digits";
-    }elseif ($room_number === '111') {
-        $errors['room_number'] = "room number cannot be 111";
     }
-
 
     if ($Ext === '') {
         $errors['Ext'] = "Extension is required";
