@@ -27,31 +27,9 @@ $image = $_SESSION["image"];
 <body>
 
 
-<?php require('./includes/navbar.php')?>;
-
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Cafetria</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">My Orders</a>
-                    </li>
-                </ul>
-           
-        </div>
-            </div>
-        </div>
-    </nav> -->
-    <!-- home section -->
+<?php require('./includes/navbar.php')?>
    
+    <!-- home section -->
     <section class="home">
         <div class="content">
             <h1 class="title">Fresh <span>Coffee</span> in the morning</h1>
@@ -68,7 +46,7 @@ $image = $_SESSION["image"];
                     <div class="orders-panel">
                         <div class="user-selection">
                            <label>Select User:</label>
-                           <select name="selected_user_id" class="form-control my-3">
+                           <select name="selected_user_id" class="form-select my-3">
                             <?php
                               $users_query = "SELECT user_id, name FROM users WHERE role = 'user'";
                               $users_result = $database->getdata("user_id, name", "users", "role='user'");
@@ -100,7 +78,7 @@ $image = $_SESSION["image"];
                         <!-- room -->
                         <div class="room">
                             <label>Room</label>
-                            <select name="room_id" class="form-control">
+                            <select name="room_id" class="form-select">
                                <?php
                                   $rooms_query = "SELECT * FROM rooms";
                                   $rooms_result = $database->getdata("*", "rooms", "");
@@ -143,7 +121,7 @@ $image = $_SESSION["image"];
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assests/js/home.js"></script>
 </body>
 </html>
