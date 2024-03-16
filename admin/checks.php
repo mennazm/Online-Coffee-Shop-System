@@ -358,7 +358,7 @@ if(mysqli_num_rows($product_result) > 0) {
       echo "<td style='background-color: white;'>" . $row['name'] . "</td>"; // Add style attribute for white background
       echo "<td style='background-color: white;'>" . $row['price'] . "</td>"; // Add style attribute for white background
       // Assuming the image is stored in a folder named "images"
-      echo "<td style='background-color: white;'><img src='images/" . $row['image'] . "' width='100' height='100'></td>"; // Add style attribute for white background
+      echo "<td style='background-color: white;'><img src='./assests/images/" . $row['image'] . "' width='100' height='100'></td>";      echo "</tr>";
       echo "</tr>";
   }
   echo "</tbody>";

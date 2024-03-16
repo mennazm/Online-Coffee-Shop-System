@@ -188,7 +188,7 @@ function getUserOrders($user_id) {
 }
 
 function getOrderProducts($order_id) {
-    $sql = "SELECT * FROM products WHERE id IN (SELECT product_id FROM order_items WHERE order_id = ?)";
+    $sql = "SELECT * FROM products WHERE product_id IN (SELECT product_id FROM order_items WHERE order_id = ?)";
     $stmt = $this->connection->prepare($sql);
     $stmt->bind_param("i", $order_id);
     $stmt->execute();
