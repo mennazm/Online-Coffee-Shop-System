@@ -15,8 +15,15 @@ $image = $_SESSION["image"];
 ?>
 <!DOCTYPE html>
 <html>
-<?php include('./includes/header.php')?>
-
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
+   
+</head>
 
 <body>
 <?php include('./includes/navbar.php')?>
@@ -49,6 +56,8 @@ $image = $_SESSION["image"];
                        /*  echo "<pre>";
                         var_dump($result->fetch_assoc());
                 echo "</pre>"; */
+                
+          
        
                    while ($row = $result->fetch_assoc()) {
                     
@@ -64,27 +73,30 @@ $image = $_SESSION["image"];
                        echo "</pre>"; */
                         $room=$rooms->fetch_assoc(); 
                          echo "<td>{$room['room_number']}</td>";
-                        echo "<td>{$room['Ext']}</td>";
+                        echo "<td>{$row['Ext']}</td>";
                         echo "<td>deliver</td>";
                         echo "</tr>";
                         echo "<tr class='order-details' style='display: none;'>";
                         echo "<td colspan='5'>";
-                        echo "<div class='row order-items col-md-12'>";
+                        echo "<div class='row order-items'>";
                         // Fetch order details for the current order
                         $orderProducts = $db->getOrderProducts($row['order_id']);
+                       // var_dump($orderProducts->fetch_assoc());
+                      
+                        $orderitems=$db->getdata("*","order_items","order_id={$row['order_id']}")->fetch_assoc();
+                       // var_dump($orderitems);
                         $totalPrice = 0; // Initialize total price
                         if ($orderProducts->num_rows > 0) {
+                           //var_dump($orderProducts->fetch_assoc());
                             while ($order_detail = $orderProducts->fetch_assoc()) {
-                                // Fetch order item for the current product
-                                $orderItem = $db->getdata("*", "order_items", "order_id={$row['order_id']} AND product_id={$order_detail['product_id']}")->fetch_assoc();
-                                
-                                echo "<div class='col-sm-3'>";
+                                echo "<div class='col-sm-6 col-md-3'>";
                                 echo "<div class='each-order'>";
-                                echo "<img src='./assests/images/{$order_detail['image']}' class='img-fluid w-75 w-md-75 ' alt='{$order_detail['name']}' />";
+                                echo "<img src='./assests/images/{$order_detail['image']}' class='w-75'  alt='{$order_detail['name']}' />";
                                 echo "<h4>{$order_detail['name']}</h4>";
                                 echo "<h6> Price: <span>{$order_detail['price']} LE</span></h6>";
-                                echo "<h6> Quantity: <span>{$orderItem['quantity']}</span></h6>";
-                                $totalPrice += $order_detail['price'] * $orderItem['quantity']; // Add the price of each item to the total
+                                $totalPrice += $order_detail['price'] * $orderitems['quantity']; // Add the price of each item to the total
+                                echo "<h6> Quantity: <span>{$orderitems['quantity']}</span></h6>";
+                            
                                 echo "</div>";
                                 echo "</div>";
                             }
@@ -102,7 +114,7 @@ $image = $_SESSION["image"];
                         $deliveredOrdersFound = true; // Set the flag to true if delivered orders are found
                     }
                 }
-                   echo "</tbody>";
+                echo "</tbody>";
                         echo "</table>";
             } 
             if (!$deliveredOrdersFound) { // Display message if no delivered orders are found
@@ -114,6 +126,7 @@ $image = $_SESSION["image"];
         </div>
     </section>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="../assests/js/orders.js"></script>
 </body>
 </html>

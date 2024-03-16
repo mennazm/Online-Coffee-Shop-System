@@ -123,7 +123,7 @@ $image = $_SESSION["image"];
                                 if ($orderItem) {
                                     echo "<div class='col-sm-3'>";
                                     echo " <div class='each-order'>";
-                                    echo "<img src='../assests/images/{$product['image']}' alt='{$product['name']}' />";
+                                    echo "<img src='../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
                                     echo "<h5>{$product['name']}</h5>";
                             
                                     $totalPriceProduct = $product['price'] * $orderItem['quantity']; // Calculate total price for this product
@@ -188,7 +188,7 @@ $image = $_SESSION["image"];
                             // Cancel button if order status is 'Processing'
                             echo "<td>";
 						
-                            if ($order['order_status'] == "Done") {
+                            if ($order['order_status'] == "Processing") {
                                 echo "<form method='post' action='cancel_order.php' onsubmit='return confirmDelete()'>";
                                 echo "<input type='hidden' name='order_id' value='{$order['order_id']}' />";
                                 echo "<button type='submit' class='cancel btn btn-danger' name='cancel_order'>Cancel</button>";
@@ -213,7 +213,7 @@ $image = $_SESSION["image"];
                                 if ($orderItem) {
                                     echo "<div class='col-sm-3'>";
                                     echo " <div class='each-order'>";
-                                    echo "<img src='../assests/images/{$product['image']}' alt='{$product['name']}' />";
+                                    echo "<img src='../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
                                     echo "<h5>{$product['name']}</h5>";
                             
                                   //  $totalPriceProduct = $product['price'] * $orderItem['quantity']; // Calculate total price for this product

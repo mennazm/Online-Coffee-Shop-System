@@ -15,10 +15,11 @@ nav,footer{
 h1,h2,h3,h4,h5,th{
     color: #4b281e;
 }
-/* .each-order img{
-    width: 30vw;
+.each-order img{
+    width: 20vw;
     height: 30vh;
-} */
+} 
+
 input[name='filter']{
     background-color: #93634C;
 }
