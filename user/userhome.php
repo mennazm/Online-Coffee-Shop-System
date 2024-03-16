@@ -41,8 +41,9 @@ $image = $_SESSION["image"];
                     </li>
                 </ul>
                 <div class="user-info">
-            <img src="<?php echo $image; ?>" alt="Profile Picture">
-            <?php echo $username; ?>
+                <?php
+            echo "<img class='img-fluid w-30' src='../assests/images/$image' alt='$username' title='$username' width='50' height='50'/>";
+           echo $username; ?>
         </div>
             </div>
         </div>

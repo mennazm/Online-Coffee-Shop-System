@@ -17,12 +17,12 @@ nav,footer {
 .navbar a:hover {
   color: #FBF8F2;
 }
-.user-info img {
+/* .user-info img {
   width: 30px;
   height: 30px;
   border-radius: 60%;
   margin-right: 15px;
-}
+} */
 .home{
   background-image: url(../images/bg3.jpg);
   background-position: center;

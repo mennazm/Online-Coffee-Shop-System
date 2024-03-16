@@ -25,6 +25,12 @@ $errors = $_SESSION['errors'] ?? [];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Room</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+   #thebutton{
+        background-color: #4b281e;
+        color:#FBF8F2;
+    }
+</style>
 </head>
 <body>
     <div class="container mt-5">
@@ -47,7 +53,7 @@ $errors = $_SESSION['errors'] ?? [];
             <?php if (isset($errors['database'])): ?>
                 <div class="alert alert-danger"><?= $errors['database'] ?></div>
             <?php endif; ?>
-            <button type="submit" class="btn btn-primary">Add Room</button>
+            <button type="submit" class="btn" id='thebutton'>Add Room</button>
         </form>
     </div>
  

@@ -64,7 +64,7 @@ input[name='filter']{
             <div class="user-info ml-auto" >
                 <div class="d-flex align-items-center">
                     <?php
-                    echo "<img src='../assests/images/$image' alt='$username' title='$username' class='img-fluid' style='width: 60px; height: 60px;border-radius-none' />";
+                    echo "<img src='../assests/images/$image' alt='$username' title='$username' class='img-fluid' style='width: 60px; height: 60px;' />";
                     echo "<p class='mt-3 mx-2'>$username</p>";
                     ?>
                 </div>

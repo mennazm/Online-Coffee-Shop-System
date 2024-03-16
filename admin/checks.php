@@ -85,6 +85,10 @@ nav {
 .row {
     margin-left: 200px;
 }
+#thebutton,#filter{
+        background-color: #4b281e;
+        color:#FBF8F2;
+    }
 </style>
 </head>
 
@@ -116,7 +120,7 @@ nav {
                             </div>
                             <div class="col-sm-4 mt-4">
                                 <div class="form-group">
-                                    <button id="filter" type="submit" class="btn btn-primary">filter</button>
+                                    <button id="filter" type="submit" class="btn" >filter</button>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +174,7 @@ nav {
                                     </select>
                                 </div>
                                 <div class="form-group" style="margin-left:60px;">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn" id='thebutton'>Submit</button>
                                 </div>
                             </form>
                         </div>
