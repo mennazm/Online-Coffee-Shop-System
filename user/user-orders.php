@@ -161,7 +161,7 @@ $image = $_SESSION["image"];
                         // If start and end dates are not provided, fetch all orders
                         // Output orders and items
                         $orders = $db->getUserOrders($user_id);
-                        
+                        if ($orders->num_rows > 0) {
 						echo "<table class='table'>";
                             echo "<thead class='thead-light'>";
                             echo "<tr>";
@@ -172,7 +172,7 @@ $image = $_SESSION["image"];
                             echo "</tr>";
                             echo "</thead>";
                             echo "<tbody>";
-              
+                        
                         while ($order = $orders->fetch_assoc()) {
                             
 							// Initialize total price for each order
@@ -188,7 +188,7 @@ $image = $_SESSION["image"];
                             // Cancel button if order status is 'Processing'
                             echo "<td>";
 						
-                            if ($order['order_status'] == "Processing") {
+                            if ($order['order_status'] == "Done") {
                                 echo "<form method='post' action='cancel_order.php' onsubmit='return confirmDelete()'>";
                                 echo "<input type='hidden' name='order_id' value='{$order['order_id']}' />";
                                 echo "<button type='submit' class='cancel btn btn-danger' name='cancel_order'>Cancel</button>";
@@ -239,6 +239,11 @@ $image = $_SESSION["image"];
 						echo "<h3>{$totalPriceAllOrders} EGP</h3>"; 
 						echo "</div>";
                     }
+                    else{
+                      echo "<p>No orders Founded</p>";
+                    }
+                }
+                
                 } catch (Exception $e) {
                     echo "Error: " . $e->getMessage();
                 }
