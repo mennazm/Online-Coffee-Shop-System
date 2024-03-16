@@ -1,7 +1,9 @@
 <?php
  //var_dump($_SESSION);
+
  ob_start();
-include('includes/header.php')?>
+ session_start(); 
+?>
 
 <?php
 require('../config/dbcon.php');

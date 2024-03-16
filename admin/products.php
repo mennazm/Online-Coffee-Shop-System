@@ -53,8 +53,9 @@ include('includes/navbar.php');
                         echo "<td>{$row['status']}</td>";
                         echo "<td><img src='assests/images/{$row['image']}'  width='50' height='50'></td>";
                         echo "<td>
-                              <a href='edit-product.php?id={$row['id']}' class='btn btn-primary'>Edit</a>
-                              <button class='btn btn-danger' onclick='confirmDelete({$row['id']})'>Delete</button>
+                        <a href='edit-product.php?id={$row['product_id']}' class='btn btn-primary'>Edit</a>
+
+                              <button class='btn btn-danger' onclick='confirmDelete({$row['product_id']})'>Delete</button>
                             </td>";
                         echo "</tr>";
                     }

@@ -38,7 +38,7 @@ if(empty($_POST['status'])) {
 }
 
 if(empty($errors)) {
-    $id=$_POST['id'];
+    $id=$_POST['product_id'];
     $name = $_POST['name'];
     $price = $_POST['price'];
     $status= $_POST['status'];
@@ -63,7 +63,7 @@ if(empty($errors)) {
 
     // Update data in the database
     $tableName = 'products';
-    $condition = "id=$id"; // Condition to identify the row to update
+    $condition = "product_id=$product_id"; // Condition to identify the row to update
     $result = $database->update_data($tableName, $values, $condition);
  
     if($result) {
@@ -87,10 +87,10 @@ if(empty($errors)) {
 
 
 // Fetch product details for editing
-if(isset($_GET["id"])) 
-{
-    $id = $_GET['id'];
-    $product = $database->getbyid("products", $id);
+if(isset($_GET["id"])) { // Change "product_id" to "id"
+    $product_id = $_GET["id"]; // Fetch product_id from the URL
+    $product = $database->getbyid("products", $product_id);
+   
     if ($product && $product->num_rows > 0) {
         $row = $product->fetch_assoc(); // Fetch the product details
 ?>

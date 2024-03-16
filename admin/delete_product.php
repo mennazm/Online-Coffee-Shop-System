@@ -30,7 +30,7 @@ if(isset($_POST['delete_product_btn'])) {
     }
     
     
-    $result_product = $db->delete("products", "id = $product_id");
+    $result_product = $db->delete("products", "product_id = $product_id");
    
     if ($result_product) {
         echo "Product deleted successfully";

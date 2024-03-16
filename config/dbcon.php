@@ -153,20 +153,21 @@ function insert_data($tableName, $columns, $values){
  
 
 
-function getbyid($tableName , $id){
-    // Execute SQL query to fetch the record with the specified ID
-    $result = $this->connection->query("SELECT * FROM $tableName WHERE id=$id");
-    
-   
-    if ($result) {
-       
-        return $result;
-    } else {
-       
-        echo "Error: " . $this->connection->error;
-        return null;
+    function getbyid($tableName, $id) {
+        // Sanitize the input to prevent SQL injection
+        $id = $this->connection->real_escape_string($id);
+        
+        // Execute SQL query to fetch the record with the specified ID
+        $result = $this->connection->query("SELECT * FROM $tableName WHERE product_id=$id");
+        
+        if ($result) {
+            return $result;
+        } else {
+            echo "Error: " . $this->connection->error;
+            return null;
+        }
     }
-}
+    
 public function getOrdersByDateRangeForUser($user_id, $start_date, $end_date) {
     $query = "SELECT * FROM orders WHERE user_id = ? AND order_date BETWEEN ? AND ?";
     $stmt = $this->connection->prepare($query);
@@ -188,7 +189,7 @@ function getUserOrders($user_id) {
 }
 
 function getOrderProducts($order_id) {
-    $sql = "SELECT * FROM products WHERE id IN (SELECT product_id FROM order_items WHERE order_id = ?)";
+    $sql = "SELECT * FROM products WHERE product_id IN (SELECT product_id FROM order_items WHERE order_id = ?)";
     $stmt = $this->connection->prepare($sql);
     $stmt->bind_param("i", $order_id);
     $stmt->execute();
