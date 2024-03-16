@@ -15,15 +15,15 @@ if ($user_orders->num_rows > 0) {
         $order_id = $order['order_id'];
         
         // Delete order items associated with this order
-        $db->delete('order_items', "order_id = $order_id");
+        $db->deleteuser('order_items', "order_id = $order_id");
         
         // Delete the order
-        $db->delete('orders', "order_id = $order_id");
+        $db->deleteuser('orders', "order_id = $order_id");
     }
 }
 
 // Call the delete method to delete the user
-$result = $db->delete("users", "user_id = $user_id");
+$result = $db->deleteuser("users", "user_id = $user_id");
 
 // Check if deletion was successful
 if ($result) {

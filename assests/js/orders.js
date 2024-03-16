@@ -16,3 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+function confirmDelete() {
+    return confirm("Are you sure to cancel this order?");
+}

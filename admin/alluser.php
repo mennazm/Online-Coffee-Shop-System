@@ -1,5 +1,4 @@
-<?php session_start();
-include('includes/header.php');
+<?php session_start()
 ?>
 <?php
 if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
@@ -11,17 +10,16 @@ exit();
 $user_id = $_SESSION["user_id"];
 $username = $_SESSION["username"];
 $image = $_SESSION["image"];
-include('includes/navbar.php');
-?>
 
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>User and Room Tables</title>
-    
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"></head>
 <body>
 <?php
+include('includes/navbar.php');
 require('../config/dbcon.php');
 $db = new db(); 
 ?>
@@ -50,7 +48,8 @@ $db = new db();
                         <?php
                                                 $query = "SELECT u.*, r.room_number, r.Ext 
                                                 FROM users u 
-                                                LEFT JOIN rooms r ON u.room_id = r.room_id";
+                                                LEFT JOIN rooms r ON u.room_id = r.room_id
+                                                WHERE u.role = 'user'";
                                       
                         $result = $db->get_data_custom($query);
 
@@ -82,4 +81,3 @@ $db = new db();
 
 </div> 
                     </div>
-

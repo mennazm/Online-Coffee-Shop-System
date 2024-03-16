@@ -123,7 +123,7 @@ $image = $_SESSION["image"];
                                 if ($orderItem) {
                                     echo "<div class='col-sm-3'>";
                                     echo " <div class='each-order'>";
-                                    echo "<img src='../assests/images/{$product['image']}' alt='{$product['name']}' />";
+                                    echo "<img src='../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
                                     echo "<h5>{$product['name']}</h5>";
                             
                                     $totalPriceProduct = $product['price'] * $orderItem['quantity']; // Calculate total price for this product
@@ -161,7 +161,7 @@ $image = $_SESSION["image"];
                         // If start and end dates are not provided, fetch all orders
                         // Output orders and items
                         $orders = $db->getUserOrders($user_id);
-                        
+                        if ($orders->num_rows > 0) {
 						echo "<table class='table'>";
                             echo "<thead class='thead-light'>";
                             echo "<tr>";
@@ -172,7 +172,7 @@ $image = $_SESSION["image"];
                             echo "</tr>";
                             echo "</thead>";
                             echo "<tbody>";
-              
+                        
                         while ($order = $orders->fetch_assoc()) {
                             
 							// Initialize total price for each order
@@ -213,7 +213,7 @@ $image = $_SESSION["image"];
                                 if ($orderItem) {
                                     echo "<div class='col-sm-3'>";
                                     echo " <div class='each-order'>";
-                                    echo "<img src='../assests/images/{$product['image']}' alt='{$product['name']}' />";
+                                    echo "<img src='../admin/assests/images/{$product['image']}' alt='{$product['name']}' />";
                                     echo "<h5>{$product['name']}</h5>";
                             
                                   //  $totalPriceProduct = $product['price'] * $orderItem['quantity']; // Calculate total price for this product
@@ -239,6 +239,11 @@ $image = $_SESSION["image"];
 						echo "<h3>{$totalPriceAllOrders} EGP</h3>"; 
 						echo "</div>";
                     }
+                    else{
+                      echo "<p>No orders Founded</p>";
+                    }
+                }
+                
                 } catch (Exception $e) {
                     echo "Error: " . $e->getMessage();
                 }

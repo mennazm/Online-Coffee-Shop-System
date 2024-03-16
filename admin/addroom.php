@@ -1,8 +1,22 @@
-<?php
-session_start();
-$errors = $_SESSION['errors'] ?? [];
-include('../includes/header.php');
+<?php session_start()
 ?>
+<?php
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
+
+header("Location: ../login_page/login.php");
+exit();
+}
+//var_dump($_SESSION);
+$user_id = $_SESSION["user_id"];
+$username = $_SESSION["username"];
+$image = $_SESSION["image"];
+include('includes/navbar.php');
+?>
+<?php
+$errors = $_SESSION['errors'] ?? [];
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">

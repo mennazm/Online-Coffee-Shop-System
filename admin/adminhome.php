@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); 
 require_once('../config/dbcon.php');
 
 $database = new db(); 
@@ -26,38 +26,14 @@ include('includes/navbar.php');
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    
-<style>
-    body{
-    background-color: #FBF8F2;
-}
-nav,footer{
-    background-color: #93634C;
-    color: #FBF8F2;
-}
-.navbar a{
-    
-    color: #FBF8F2;
-}
-.navbar a:hover{
-    color: #FBF8F2;
-}
-h1,h2,h3,h4,h5,th{
-    color: #4b281e;
-}
-.each-order img{
-    width: 20vw;
-    height: 30vh;
-}
-input[name='filter']{
-    background-color: #93634C;
-}
-</style>
- 
+
+
+<?php require('./includes/navbar.php')?>
+   
     <!-- home section -->
     <section class="home">
         <div class="content">
-            <h1 class="title">Fresh <span>Coffe</span> in the morning</h1>
+            <h1 class="title">Fresh <span>Coffee</span> in the morning</h1>
             <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, quo! Enim eius nostrum repellat mollitia esse dolorem veritatis, iste libero commodi incidunt nisi. Neque velit iste fugiat iusto, repellendus natus.</p>
             <a href="#products" class="btn"><button>Get started</button></a>
         </div>
@@ -71,7 +47,7 @@ input[name='filter']{
                     <div class="orders-panel">
                         <div class="user-selection">
                            <label>Select User:</label>
-                           <select name="selected_user_id" class="form-control my-3">
+                           <select name="selected_user_id" class="form-select my-3">
                             <?php
                               $users_query = "SELECT user_id, name FROM users WHERE role = 'user'";
                               $users_result = $database->getdata("user_id, name", "users", "role='user'");
@@ -103,7 +79,7 @@ input[name='filter']{
                         <!-- room -->
                         <div class="room">
                             <label>Room</label>
-                            <select name="room_id" class="form-control">
+                            <select name="room_id" class="form-select">
                                <?php
                                   $rooms_query = "SELECT * FROM rooms";
                                   $rooms_result = $database->getdata("*", "rooms", "");
@@ -146,7 +122,7 @@ input[name='filter']{
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assests/js/home.js"></script>
 </body>
 </html>

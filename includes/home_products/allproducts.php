@@ -6,7 +6,7 @@ $db = new db();
 <div class="container">
     <div class="row">
         <?php
-        $result = $db->getdata("*", "products", "");
+        $result = $db->getdata("*", "products", "status = 'available'");
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 
